@@ -1,4 +1,4 @@
-# P1
+# Towards Convergent Approximate Message Passing by Alternating Constrained Minimization of Bethe Free
 
 ## Abstract
 
@@ -43,19 +43,23 @@ where:
 
 This term is subtracted from the update of the auxiliary variable to mitigate the effects of the correlations introduced by iterative updates, thereby enhancing the algorithm's stability and convergence.
 
+一些收敛性证明的方法和思路包括但不限于：
+
+1. **随机收敛性分析：** 使用随机过程理论和概率论分析算法在随机观测下的收敛性。
+2. **凸优化理论：** 将GAMP算法的迭代更新视为一种凸优化问题，并利用凸优化理论分析其收敛性。
+3. **误差传播分析：** 分析算法迭代过程中误差的传播规律，推导误差的收敛性。
+4. **收敛速度分析：** 通过分析算法迭代过程中的收敛速度，推导收敛性的结果。
 
 
 
 
 
+<figure><img src=".gitbook/assets/Screenshot 2024-03-22 at 7.57.56 pm (1).png" alt=""><figcaption></figcaption></figure>
 
+<figure><img src=".gitbook/assets/WeChat4a48fb5cef697bf1562a52a3fb1599a0.jpg" alt=""><figcaption></figcaption></figure>
 
+<figure><img src=".gitbook/assets/WeChat7bb46ebd161405f9f342b4da68766c73.jpg" alt=""><figcaption></figcaption></figure>
 
+<figure><img src=".gitbook/assets/WeChat1b12e0da10225a92cb78424502c058be.jpg" alt=""><figcaption></figcaption></figure>
 
-
-
-
-
-
-
-
+在高斯分布的假设下，意味着我们假设信号的真实值以及估计值都符合高斯分布。而"估计信号与真实信号误差服从高斯"的意思是，我们认为估计信号与真实信号之间的差异，即估计误差，也符合高斯分布。
