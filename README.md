@@ -1,3 +1,7 @@
+---
+description: https://chat.openai.com/c/d9c04517-e42f-4a84-8433-5f59209def43
+---
+
 # Towards Convergent Approximate Message Passing by Alternating Constrained Minimization of Bethe Free
 
 ## Abstract
@@ -63,3 +67,88 @@ This term is subtracted from the update of the auxiliary variable to mitigate th
 <figure><img src=".gitbook/assets/WeChat1b12e0da10225a92cb78424502c058be.jpg" alt=""><figcaption></figcaption></figure>
 
 在高斯分布的假设下，意味着我们假设信号的真实值以及估计值都符合高斯分布。而"估计信号与真实信号误差服从高斯"的意思是，我们认为估计信号与真实信号之间的差异，即估计误差，也符合高斯分布。
+
+
+
+### 中心极限定理
+
+中心极限定理表明，当独立随机变量之和足够大时，其分布接近于正态分布，无论原始随机变量的分布如何。这一定理对统计学和概率论具有重要意义，因为它意味着在许多实际情况下，可以用高斯分布来近似描述大量随机变量的总和或平均值。
+
+
+
+#### Alternating Minimization (交替最小化) 优化算法
+
+Alternating Minimization 是一种用于求解优化问题的迭代算法。其基本思想是将一个难以直接解决的大问题分解成两个或多个更容易解决的子问题，然后交替对每个子问题进行求解，通过迭代更新来逐步逼近全局最优解。该方法在机器学习和信号处理等领域有广泛应用。
+
+**算法步骤：**
+
+1. \*\*初始化：\*\*选择一个起始点作为参数的初始估计值。
+2. **交替优化：**
+   * 固定某些参数，优化其他参数。
+   * 然后固定刚才优化过的参数，再优化其它参数。
+3. \*\*迭代：\*\*重复步骤2，直到满足收敛条件，例如迭代次数达到预设值或连续两次迭代结果的差异小于某个阈值。
+
+**应用场景：**
+
+交替最小化算法在多个不同的领域都有应用，如:
+
+* **矩阵分解**（Matrix Factorization）,
+* **图像恢复**（Image Restoration）,
+* **机器学习中的优化问题**等。
+
+**优点：**
+
+* 易于实现和理解。
+* 对于某些特定问题能够快速收敛。
+
+**缺点：**
+
+* 并非总能保证找到全局最优解。
+* 性能依赖于初始化条件。
+
+
+
+#### Replica方法在近似计算最小均方误差（MMSE）估计器方面的优缺点
+
+**优点：**
+
+* 易于实现和理解。
+* 对于某些特定问题能够快速收敛。
+
+**缺点：**
+
+* 并非总能保证找到全局最优解。
+* 性能依赖于初始化条件。
+
+
+
+
+
+Replica method 是一种基于统计物理学原理的技术，用于分析复杂系统的性能，特别是在通信理论和机器学习中。该方法可以用于近似计算最小均方误差（MMSE）估计器的性能。具体步骤如下：
+
+1. **建立系统模型**：首先定义系统的数学模型，包括观测模型、未知参数的先验分布等。
+2. **引入复制品**：在 replica method 中，通过引入系统的“复制品”或“副本”，能够使得复杂的多体相互作用问题简化为能够处理的有效单体问题。
+3. **计算自由能**：计算系统的自由能，这一步通常涉及到统计物理中的平均场理论。自由能可以通过考虑系统副本在热力学极限下的性质来计算。
+4. **应用复制对称假设**：通过应用所谓的复制对称（replica symmetry）假设来简化计算，这一假设假定所有副本之间的对称性。
+5. **求解自由能的极值**：通过求解自由能关于相关参数的极值，可以得到系统的关键量，例如系统的均方误差。
+6. **恢复MMSE估计器的性能**：最后，通过对自由能或其导数进行适当的解读，可以近似计算最小均方误差（MMSE）估计器的性能。
+
+使用 replica method 近似计算 MMSE 估计器时需要数学和统计物理的先验知识，尤其是在自由能的计算和副本对称假设的应用方面。此方法对于理解估计器在高维情况下的性能特别有用，但也要注意其局限性，比如复制对称假设在某些情况下可能不成立。
+
+
+
+
+
+### Replica Method Overview
+
+The Replica method is a technique grounded in statistical physics principles, designed for analyzing the performance of complex systems, particularly in fields such as communication theory and machine learning. It is notably utilized for approximating the performance of Minimum Mean Square Error (MMSE) estimators through a series of structured steps:
+
+1. **System Model Establishment**: Define the mathematical model of the system, including observation models and the prior distribution of unknown parameters.
+2. **Replica Introduction**: Simplify the complex multibody interaction problem into a manageable single-body issue by introducing "replicas" or "copies" of the system.
+3. **Free Energy Calculation**: Compute the system's free energy, often involving average field theory from statistical physics. This calculation considers the properties of system replicas under thermodynamic limit.
+4. **Replica Symmetry Assumption**: Simplify calculations by adopting the replica symmetry assumption, which posits symmetry among all replicas.
+5. **Free Energy Extremum Resolution**: Determine the system's key metrics, like mean square error, by solving for the extrema of free energy in relation to relevant parameters.
+6. **MMSE Estimator Performance Recovery**: Approximate MMSE estimator performance by interpreting free energy or its derivatives appropriately.
+
+Utilizing the replica method for approximating MMSE estimator performance requires prior knowledge in mathematics and statistical physics, especially concerning free energy calculations and the application of the replica symmetry assumption. This method is particularly valuable for understanding estimator performance in high-dimensional scenarios but also carries limitations, such as potential inapplicability of the replica symmetry assumption in some cases.
+
