@@ -1,7 +1,3 @@
----
-description: https://chat.openai.com/c/d9c04517-e42f-4a84-8433-5f59209def43
----
-
 # Towards Convergent Approximate Message Passing by Alternating Constrained Minimization of Bethe Free
 
 ## Abstract
