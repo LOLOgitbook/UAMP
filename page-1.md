@@ -8,6 +8,12 @@
 
 了解AMP算法与传统方法之间的联系对于解决AMP算法可能遇到的收敛性问题至关重要。这种理解可能帮助研究者设计新的算法，这些算法既保留了AMP的高效性，又提高了在更一般设置下的稳定性和可靠性。通过这种方式，AMP算法的应用范围可能会得到扩展，适应性和鲁棒性也会得到改善。
 
+_**Our first main result (Theorem 1) shows that the fixed points (̂ x, ̂z) of max-sum GAMP are critical points of the optimization (1)**_
+
+_**For sum-product GAMP, we show (Theorem 2) that the algorithm’s fixed points are stationary points of a certain energy function.**_
+
+<mark style="color:red;">This paper includes all the proofs and more extensive discussion regarding relations between GAMP and classic optimization and free energy minimization techniques.</mark>
+
 
 
 ## 优化问题
