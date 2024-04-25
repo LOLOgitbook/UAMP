@@ -460,5 +460,48 @@ ADMM算法通过以下迭代步骤交替优化 (x)，(z) 和 (y)：
 
 这个约束最小化问题的目的是在满足给定的线性关系和统计属性约束下，找到最优的概率分布 (b\_x)、(b\_z) 和 (q\_z)。这种问题形式在许多实际应用中非常重要，例如在信号处理中恢复信号，或在机器学习中拟合概率模型。通过最小化 (JSP) 函数并满足给定约束，可以确保找到的解既符合模型的先验知识，又能很好地解释观察到的数据。
 
+## 18公式
+
+Let's break down how the approximation for ( Q\_{\mathbf{x\}} ) is derived, given that:
+
+\[ d\_{\mathbf{x\}} := \text{diag}\[\mathbf{H}_{f_{\mathbf{x\}}}(\mathbf{x})], \quad d\_{\mathbf{z\}} := \text{diag}\[\mathbf{H}_{f_{\mathbf{z\}}}(\mathbf{z})] ]
+
+and the function ( F(\mathbf{x}, \mathbf{z}) \coloneqq f\_{\mathbf{x\}}(\mathbf{x}) + f\_{\mathbf{z\}}(\mathbf{z}) ).
+
+The goal is to analyze ( Q\_{\mathbf{x\}} = \[\mathbf{H}\_{\mathbf{x\}} F(\mathbf{x}, A\mathbf{x})]^{-1} ).
+
+#### Step 1: Determine the Hessian of ( F ) with respect to ( \mathbf{x} )
+
+Since ( F(\mathbf{x}, \mathbf{z}) ) is separable, the Hessian of ( F ) with respect to ( \mathbf{x} ) is block diagonal when considering ( \mathbf{x} ) and ( \mathbf{z} ) as independent variables. However, given the constraint ( z = A\mathbf{x} ), the dependency must be considered:
+
+\[ \mathbf{H}_{\mathbf{x\}} F(\mathbf{x}, \mathbf{z}) = \mathbf{H}_{\mathbf{x\}} f\_{\mathbf{x\}}(\mathbf{x}) + \frac{\partial^2 f\_{\mathbf{z\}}(\mathbf{z})}{\partial \mathbf{x}^2} ]
+
+#### Step 2: Consider the dependency ( z = A\mathbf{x} )
+
+The dependency introduces off-diagonal terms in the Hessian matrix due to the interaction between ( \mathbf{x} ) and ( \mathbf{z} ). The second term in the Hessian of ( F ) is related to the change in ( \mathbf{z} ) as ( \mathbf{x} ) changes, which can be found using the chain rule:
+
+\[ \frac{\partial^2 f\_{\mathbf{z\}}(\mathbf{z})}{\partial \mathbf{x}^2} = A^T \mathbf{H}_{f_{\mathbf{z\}}}(\mathbf{z}) A ]
+
+#### Step 3: Approximate the Hessian using only diagonal elements
+
+In the interest of simplification, we approximate the full Hessian matrices by their diagonal components:
+
+\[ \mathbf{H}_{f_{\mathbf{x\}}}(\mathbf{x}) \approx \text{Diag}(d\_{\mathbf{x\}}), \quad \mathbf{H}_{f_{\mathbf{z\}}}(\mathbf{z}) \approx \text{Diag}(d\_{\mathbf{z\}}) ]
+
+This approximation assumes that the impact of off-diagonal elements (cross-derivatives) is small or that we are interested in capturing only the direct effects of each variable.
+
+#### Step 4: Combine the diagonal approximations to form ( Q\_{\mathbf{x\}} )
+
+We now express ( Q\_{\mathbf{x\}} ) as:
+
+\[ Q\_{\mathbf{x\}} = \left( \text{Diag}(d\_{\mathbf{x\}}) + A^T \text{Diag}(d\_{\mathbf{z\}}) A \right)^{-1} ]
+
+Here, ( \text{Diag}(d\_{\mathbf{x\}}) ) captures the direct curvature effects from ( \mathbf{x} ), and ( A^T \text{Diag}(d\_{\mathbf{z\}}) A ) captures how the curvature in ( \mathbf{z} ) space (as induced by ( f\_{\mathbf{z\}} )) is transformed back into ( \mathbf{x} ) space via ( A ).
+
+#### Conclusion
+
+The approximation ( Q\_{\mathbf{x\}} ) retains the key information of how changing ( \mathbf{x} ) impacts both ( f\_{\mathbf{x\}} ) and ( f\_{\mathbf{z\}} ) while avoiding the computational complexity of dealing with the full off-diagonal Hessian matrix. This simplification is particularly useful when the Hessian matrix is large and computing its inverse directly is impractical. It allows us to use the second-order information in an optimization algorithm more efficiently.
 
 
+
+&#x20;
