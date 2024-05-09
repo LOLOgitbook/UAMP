@@ -464,29 +464,45 @@ ADMM算法通过以下迭代步骤交替优化 (x)，(z) 和 (y)：
 
 Let's break down how the approximation for ( Q\_{\mathbf{x\}} ) is derived, given that:
 
-\[ d\_{\mathbf{x\}} := \text{diag}\[\mathbf{H}_{f_{\mathbf{x\}}}(\mathbf{x})], \quad d\_{\mathbf{z\}} := \text{diag}\[\mathbf{H}_{f_{\mathbf{z\}}}(\mathbf{z})] ]
+&#x20;
 
-and the function ( F(\mathbf{x}, \mathbf{z}) \coloneqq f\_{\mathbf{x\}}(\mathbf{x}) + f\_{\mathbf{z\}}(\mathbf{z}) ).
+$$
+d_{\mathbf{x}} := \text{diag}[\mathbf{H}{f{\mathbf{x}}}(\mathbf{x})], \quad d_{\mathbf{z}} := \text{diag}[\mathbf{H}{f{\mathbf{z}}}(\mathbf{z})]
+$$
 
-The goal is to analyze ( Q\_{\mathbf{x\}} = \[\mathbf{H}\_{\mathbf{x\}} F(\mathbf{x}, A\mathbf{x})]^{-1} ).
+and the function $$( F(\mathbf{x}, \mathbf{z}) \coloneqq f_{\mathbf{x}}(\mathbf{x}) + f_{\mathbf{z}}(\mathbf{z}) )$$ &#x20;
+
+The goal is to analyze $$( Q_{\mathbf{x}} = [\mathbf{H}_{\mathbf{x}} F(\mathbf{x}, A\mathbf{x})]^{-1} ).$$ &#x20;
 
 #### Step 1: Determine the Hessian of ( F ) with respect to ( \mathbf{x} )
 
-Since ( F(\mathbf{x}, \mathbf{z}) ) is separable, the Hessian of ( F ) with respect to ( \mathbf{x} ) is block diagonal when considering ( \mathbf{x} ) and ( \mathbf{z} ) as independent variables. However, given the constraint ( z = A\mathbf{x} ), the dependency must be considered:
+Since ( $$F(\mathbf{x}, \mathbf{z})$$ ) is separable, the Hessian of ( F ) with respect to ( $$x$$) is block diagonal when considering ( \mathbf{x} ) and ( \mathbf{z} ) as independent variables. However, given the constraint ( z = A\mathbf{x} ), the dependency must be considered:&#x20;
 
-\[ \mathbf{H}_{\mathbf{x\}} F(\mathbf{x}, \mathbf{z}) = \mathbf{H}_{\mathbf{x\}} f\_{\mathbf{x\}}(\mathbf{x}) + \frac{\partial^2 f\_{\mathbf{z\}}(\mathbf{z})}{\partial \mathbf{x}^2} ]
+$$
+[ \mathbf{H}{\mathbf{x}} F(\mathbf{x}, \mathbf{z}) = \mathbf{H}{\mathbf{x}} f_{\mathbf{x}}(\mathbf{x}) + \frac{\partial^2 f_{\mathbf{z}}(\mathbf{z})}{\partial \mathbf{x}^2} ]
+$$
 
 #### Step 2: Consider the dependency ( z = A\mathbf{x} )
 
 The dependency introduces off-diagonal terms in the Hessian matrix due to the interaction between ( \mathbf{x} ) and ( \mathbf{z} ). The second term in the Hessian of ( F ) is related to the change in ( \mathbf{z} ) as ( \mathbf{x} ) changes, which can be found using the chain rule:
 
-\[ \frac{\partial^2 f\_{\mathbf{z\}}(\mathbf{z})}{\partial \mathbf{x}^2} = A^T \mathbf{H}_{f_{\mathbf{z\}}}(\mathbf{z}) A ]
+&#x20;
+
+$$
+[ \frac{\partial^2 f_{\mathbf{z}}(\mathbf{z})}{\partial \mathbf{x}^2} = A^T \mathbf{H}{f{\mathbf{z}}}(\mathbf{z}) A ]
+$$
+
+####
 
 #### Step 3: Approximate the Hessian using only diagonal elements
 
 In the interest of simplification, we approximate the full Hessian matrices by their diagonal components:
 
-\[ \mathbf{H}_{f_{\mathbf{x\}}}(\mathbf{x}) \approx \text{Diag}(d\_{\mathbf{x\}}), \quad \mathbf{H}_{f_{\mathbf{z\}}}(\mathbf{z}) \approx \text{Diag}(d\_{\mathbf{z\}}) ]
+$$
+[ \mathbf{H}{f{\mathbf{x}}}(\mathbf{x}) \approx \text{Diag}(d_{\mathbf{x}}), \quad \mathbf{H}{f{\mathbf{z}}}(\mathbf{z}) \approx \text{Diag}(d_{\mathbf{z}}) ]
+$$
+
+&#x20;
 
 This approximation assumes that the impact of off-diagonal elements (cross-derivatives) is small or that we are interested in capturing only the direct effects of each variable.
 
@@ -494,14 +510,109 @@ This approximation assumes that the impact of off-diagonal elements (cross-deriv
 
 We now express ( Q\_{\mathbf{x\}} ) as:
 
-\[ Q\_{\mathbf{x\}} = \left( \text{Diag}(d\_{\mathbf{x\}}) + A^T \text{Diag}(d\_{\mathbf{z\}}) A \right)^{-1} ]
+$$Q_{\mathbf{x}} = \left( \text{Diag}(d_{\mathbf{x}}) + A^T \text{Diag}(d_{\mathbf{z}}) A \right)^{-1}$$
 
 Here, ( \text{Diag}(d\_{\mathbf{x\}}) ) captures the direct curvature effects from ( \mathbf{x} ), and ( A^T \text{Diag}(d\_{\mathbf{z\}}) A ) captures how the curvature in ( \mathbf{z} ) space (as induced by ( f\_{\mathbf{z\}} )) is transformed back into ( \mathbf{x} ) space via ( A ).
 
-#### Conclusion
+#### &#x20;![](<.gitbook/assets/Screenshot 2024-04-25 at 1.40.40 pm.png>)
 
-The approximation ( Q\_{\mathbf{x\}} ) retains the key information of how changing ( \mathbf{x} ) impacts both ( f\_{\mathbf{x\}} ) and ( f\_{\mathbf{z\}} ) while avoiding the computational complexity of dealing with the full off-diagonal Hessian matrix. This simplification is particularly useful when the Hessian matrix is large and computing its inverse directly is impractical. It allows us to use the second-order information in an optimization algorithm more efficiently.
+## hessian matrix
+
+当然可以。我将重新给出关于Hessian矩阵的推导步骤，这次我会确保使用正确的数学公式格式。
+
+**解题步骤**
+
+_步骤 1：定义函数_ 考虑一个至少二次可导的函数 ( f : \mathbb{R}^n \to \mathbb{R} )，这意味着所有的二阶偏导数都存在且连续。
+
+_步骤 2：计算一阶偏导数_ 计算函数 ( f ) 关于每个变量 ( z\_i ) 的一阶偏导数：
+
+\[ \frac{\partial f}{\partial z\_i} ]
+
+_步骤 3：计算二阶偏导数_ 计算函数 ( f ) 关于每一对变量 ( z\_i ) 和 ( z\_j ) 的二阶偏导数：
+
+\[ \frac{\partial^2 f}{\partial z\_i \partial z\_j} ]
+
+_步骤 4：构造Hessian矩阵_ 将所有的二阶偏导数排列成一个方阵，形成Hessian矩阵 ( H )：
+
+$$
+\begin{bmatrix} \frac{\partial^2 f}{\partial z_1^2} & \frac{\partial^2 f}{\partial z_1 \partial z_2} & \cdots & \frac{\partial^2 f}{\partial z_1 \partial z_n} \\ \frac{\partial^2 f}{\partial z_2 \partial z_1} & \frac{\partial^2 f}{\partial z_2^2} & \cdots & \frac{\partial^2 f}{\partial z_2 \partial z_n} \\ \vdots & \vdots & \ddots & \vdots \\ \frac{\partial^2 f}{\partial z_n \partial z_1} & \frac{\partial^2 f}{\partial z_n \partial z_2} & \cdots & \frac{\partial^2 f}{\partial z_n^2} \end{bmatrix}
+$$
+
+]
+
+如果函数 ( f ) 满足克莱罗定理（Clairaut's theorem）的条件，即所有的二阶混合偏导数都连续，那么Hessian矩阵 ( H ) 是对称的。
+
+**最终答案** Hessian矩阵 ( H ) 是由函数 ( f ) 的所有二阶偏导数构成的方阵，如步骤 4 中所示。
+
+**核心概念** Hessian矩阵
+
+**核心概念解释** Hessian矩阵是由多变量函数的二阶偏导数构成的方阵，描述了函数在各个方向上的局部曲率。如果函数满足克莱罗定理的条件，Hessian矩阵通常是对称的。在确定函数的稳定点（极值点）性质时，Hessian矩阵起着关键作用：如果它在某点是正定的，那么函数在该点有局部最小值；如果它是负定的，则函数在该点有局部最大值；如果它是不定的，则该点是鞍点。
 
 
 
-&#x20;
+## 公式(28)
+
+The Kullback-Leibler divergence between two Gaussian distributions can be derived from the definition of the KL divergence and the probability density functions of Gaussian distributions. Here's a step-by-step explanation:
+
+Given two Gaussian distributions, ( b\_z ) and ( q\_z ), where:
+
+* ( b\_z ) is the true distribution with mean ( \mu ) and variance ( \sigma^2 ),
+* ( q\_z ) is the approximating distribution with mean ( \mu\_p ) and variance ( \tau\_p ),
+
+The KL divergence ( D(b\_z | q\_z) ) is defined as the expected log difference between these two distributions:
+
+$$
+D(b_z \| q_z) = \int_{-\infty}^{\infty} b_z(z) \cdot \log\left(\frac{b_z(z)}{q_z(z)}\right) dz
+$$
+
+For Gaussian distributions, the probability density functions are:
+
+$$
+b_z(z) = \frac{1}{\sqrt{2 \pi \sigma^2}} \exp\left(-\frac{(z - \mu)^2}{2 \sigma^2}\right)
+$$
+
+$$
+q_z(z) = \frac{1}{\sqrt{2 \pi \tau_p}} \exp\left(-\frac{(z - \mu_p)^2}{2 \tau_p}\right)
+$$
+
+Plugging these into the KL divergence definition gives:
+
+$$
+D(b_z | q_z) = \int_{-\infty}^{\infty} \frac{1}{\sqrt{2 \pi \sigma^2}} \exp\left(-\frac{(z - \mu)^2}{2 \sigma^2}\right) \cdot \log\left(\frac{\frac{1}{\sqrt{2 \pi \sigma^2}} \exp\left(-\frac{(z - \mu)^2}{2 \sigma^2}\right)}{\frac{1}{\sqrt{2 \pi \tau_p}} \exp\left(-\frac{(z - \mu_p)^2}{2 \tau_p}\right)}\right) dz
+$$
+
+This expression can be simplified by combining the logarithms and exponential terms:
+
+$$
+D(b_z | q_z) = \frac{1}{2} \left(\log\frac{\tau_p}{\sigma^2} + \frac{\sigma^2 + (\mu - \mu_p)^2}{\tau_p} - 1\right)
+$$
+
+The integral simplifies due to the properties of the exponential function and its integrals, especially considering that the Gaussian functions involved are normalized and have nice properties when integrated over the entire real line.
+
+Therefore, the given expression for ( D(b\_z | q\_z) ) does not need to be computed through integration in practice because it is a well-known result for the KL divergence between two Gaussian distributions. This result captures how the difference in means and variances contributes to the divergence measure, indicating the "distance" between the two distributions.
+
+It seems there was an issue with executing the symbolic computation. However, we can analyze and provide the solution based on known results for Gaussian distributions.
+
+For two Gaussian distributions ( b\_z ) and ( q\_z ), where ( b\_z ) is the true distribution with mean ( \mu ) and variance ( \sigma^2 ), and ( q\_z ) is the approximating distribution with mean ( \mu\_p ) and variance ( \tau\_p ), the Kullback-Leibler divergence ( D(b\_z | q\_z) ) is given by:
+
+\[ D(b\_z | q\_z) = \frac{1}{2} \left( \log\frac{\tau\_p}{\sigma^2} + \frac{\sigma^2 + (\mu - \mu\_p)^2}{\tau\_p} - 1 \right) ]
+
+Given that ( \mu\_p = \mathbb{E}\[\mathbf{z} | b\_z] ), and assuming ( \mu = \mu\_p ) to simplify the KL divergence, we have:
+
+\[ D(b\_z | q\_z) = \frac{1}{2} \left( \log\frac{\tau\_p}{\sigma^2} + \frac{\sigma^2}{\tau\_p} - 1 \right) ]
+
+The entropy ( H(b\_z) ) of the Gaussian distribution ( b\_z ) is given by:
+
+\[ H(b\_z) = \frac{1}{2} \left( 1 + \log(2 \pi \sigma^2) \right) ]
+
+So the combined expression ( D(b\_z | q\_z) + H(b\_z) ) simplifies to:
+
+\[ D(b\_z | q\_z) + H(b\_z) = \frac{1}{2} \left( \log\frac{\tau\_p}{\sigma^2} + \frac{\sigma^2}{\tau\_p} \right) + \frac{1}{2} \left( 1 + \log(2 \pi \sigma^2) \right) - \frac{1}{2} ]
+
+Simplifying further, since the ( -1 ) and ( +1 ) cancel out:
+
+\[ D(b\_z | q\_z) + H(b\_z) = \frac{1}{2} \log\frac{\tau\_p}{\sigma^2} + \frac{1}{2} \frac{\sigma^2}{\tau\_p} + \frac{1}{2} \log(2 \pi \sigma^2) ]
+
+Given the assumption ( \mu = \mu\_p ), the term ( (\mu - \mu\_p)^2 ) vanishes. This assumption may not hold in general, but it's used here to facilitate the symbolic integration. If ( \mu ) and ( \mu\_p ) differ, the expression for the KL divergence would include an additional term ( (\mu - \mu\_p)^2/\tau\_p ).
+
+The actual computation of ( D(b\_z | q\_z) + H(b\_z) ) for specific functions ( b\_z(z) ) and ( q\_z(z) ) would require knowledge of the functional form of ( b\_z(z) ), which is not given here. If ( b\_z ) is not Gaussian, the computation would likely not have a closed-form solution and would need to be approximated numerically.&#x20;
