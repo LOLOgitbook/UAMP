@@ -759,3 +759,102 @@ The actual computation of ( D(b\_z | q\_z) + H(b\_z) ) for specific functions ( 
 将这些关系代入后验概率的贝叶斯公式，并忽略规范化常数 ( p\_y(y) )（因为它不影响最优化问题的解），我们得到： \[ p\_{x,z|y}(x, z|y) \propto p\_{y|z}(y|z) p\_x(x) \mathbf{1}\_\{{z=Ax\}} ] 这个表达式形式简洁地说明了如何结合模型的先验信息、观测数据的似然，以及 ( z ) 对 ( x ) 的依赖性（通过 ( z = Ax ) 的线性约束）。在实际应用中，这使我们能够通过优化相关的负对数形式来求解最大后验估计问题。
 
 希望这个解释帮助你更好地理解模型的统计基础以及如何应用它来形成优化问题。如果还有其他问题或需要进一步的解释，请随时告知！
+
+
+
+我们来更详细地解释为什么在原始优化问题中没有 (|\mathbf{x} - \mathbf{x}^t|^2) 项，而在 ISTA 算法的迭代步骤中却引入了这一项。
+
+#### 原始优化问题
+
+假设我们的原始优化问题是：
+
+\[ $$\min_{\mathbf{x}} \left[ f_x(\mathbf{x}) + f_z(\mathbf{A} \mathbf{x}) \right]$$ ]
+
+其中 ( f\_x ) 和 ( f\_z ) 是分别关于 $$\mathbf{x}$$ 和  $$\mathbf{z} = \mathbf{A} \mathbf{x}$$ 的函数。
+
+#### 引入二次正则化项
+
+在 ISTA (Iterative Shrinkage and Thresholding Algorithm) 中，为了使每一步迭代更加稳定，并确保更新步长适当，我们引入了一个二次正则化项 $$\frac{c}{2} |\mathbf{x} - \mathbf{x}^t|^2$$。这个二次正则化项的目的是：
+
+1. **稳定更新**：通过限制每一步的更新量，避免更新步长过大导致的震荡或发散。
+2. **控制步长**：调整更新步长，确保收敛速度适当。
+
+#### ISTA 算法的迭代步骤
+
+在 ISTA 中，优化问题的每一步迭代形式是：
+
+\[ $$\mathbf{x}^{t+1} = \arg \min_{\mathbf{x}} \left[ f_x(\mathbf{x}) + (\mathbf{q}^t)^T \mathbf{A} \mathbf{x} + \frac{c}{2} |\mathbf{x} - \mathbf{x}^t|^2 \right]$$]
+
+这里，(\mathbf{q}^t) 是当前点 $$\mathbf{z}^t = \mathbf{A}\mathbf{x}^t$$ 处 ( f\_z ) 的梯度。
+
+#### 推导步骤
+
+1.  **目标函数线性化**：
+
+    对 ( f\_z(\mathbf{z}) ) 在当前点 $$\mathbf{z}^t = \mathbf{A}\mathbf{x}^t$$ 处进行一阶 Taylor 展开：
+
+    \[ $$f_z(\mathbf{z}) \approx f_z(\mathbf{z}^t) + (\mathbf{q}^t)^T (\mathbf{z} - \mathbf{z}^t)$$ ]
+
+    因为 ( $$\mathbf{z} = \mathbf{A} \mathbf{x}$$)，所以：
+
+    \[ $$f_z(\mathbf{A} \mathbf{x}) \approx f_z(\mathbf{z}^t) + (\mathbf{q}^t)^T (\mathbf{A} \mathbf{x} - \mathbf{z}^t)$$]
+
+    这一步中，我们忽略了与 (\mathbf{x}) 无关的常数项 ( f\_z(\mathbf{z}^t) - (\mathbf{q}^t)^T \mathbf{z}^t )。
+2.  **加入二次正则化项**：
+
+    为了稳定更新过程，我们引入了一个二次正则化项 ( $$\frac{c}{2} |\mathbf{x} - \mathbf{x}^t|^2$$)。这个项确保每一步更新不会离当前解 (\mathbf{x}^t) 太远。
+3.  **组合并求解**：
+
+    最终，迭代优化问题变为：
+
+    &#x20;$$\mathbf{x}^{t+1} = \arg \min_{\mathbf{x}} \left[ f_x(\mathbf{x}) + (\mathbf{q}^t)^T \mathbf{A} \mathbf{x} + \frac{c}{2} |\mathbf{x} - \mathbf{x}^t|^2 \right]$$
+
+这个问题的求解可以通过最小化包含二次项的目标函数来实现。
+
+#### 结论
+
+在原始优化问题中没有二次正则化项 (|\mathbf{x} - \mathbf{x}^t|^2)，但在 ISTA 算法中，为了确保每一步迭代的稳定性和适当的步长，我们引入了这个二次正则化项。这个项使得每一步的更新更加稳定，并避免了步长过大的问题，从而有助于算法的收敛。
+
+是的，加入二次正则化项确实会导致优化问题变为一个二次近似问题（quadratic majorizing problem）。这种方法有助于稳定每一步迭代，并确保收敛。
+
+#### Quadratic Majorizing (二次近似)
+
+在优化问题中，二次近似方法是一种常见的技术。它通过构造一个二次函数来近似目标函数，使得每一步迭代都能更容易地求解。这种方法通常称为“majorization”，即用一个更简单的函数来包住复杂的目标函数。
+
+#### 详细解释
+
+**原始问题**
+
+假设我们有一个原始优化问题：
+
+\[ \min\_{\mathbf{x\}} \left\[ f\_x(\mathbf{x}) + f\_z(\mathbf{A} \mathbf{x}) \right] ]
+
+其中，(\mathbf{A}) 是一个线性变换矩阵，(\mathbf{x}) 是我们要优化的变量。
+
+**线性化目标函数**
+
+对 ( f\_z(\mathbf{A} \mathbf{x}) ) 进行一阶 Taylor 展开：
+
+\[ f\_z(\mathbf{A} \mathbf{x}) \approx f\_z(\mathbf{A} \mathbf{x}^t) + \nabla f\_z(\mathbf{A} \mathbf{x}^t)^T (\mathbf{A} \mathbf{x} - \mathbf{A} \mathbf{x}^t) ]
+
+设 (\mathbf{q}^t = \nabla f\_z(\mathbf{A} \mathbf{x}^t))，得到：
+
+\[ f\_z(\mathbf{A} \mathbf{x}) \approx f\_z(\mathbf{A} \mathbf{x}^t) + (\mathbf{q}^t)^T (\mathbf{A} \mathbf{x} - \mathbf{A} \mathbf{x}^t) ]
+
+忽略与 (\mathbf{x}) 无关的常数项 ( f\_z(\mathbf{A} \mathbf{x}^t) - (\mathbf{q}^t)^T \mathbf{A} \mathbf{x}^t )，得到：
+
+\[ f\_z(\mathbf{A} \mathbf{x}) \approx (\mathbf{q}^t)^T \mathbf{A} \mathbf{x} ]
+
+**引入二次正则化项**
+
+为了确保每一步迭代的稳定性和适当的步长，我们引入一个二次正则化项 (\frac{c}{2} |\mathbf{x} - \mathbf{x}^t|^2)。最终优化问题变为：
+
+\[ \mathbf{x}^{t+1} = \arg \min\_{\mathbf{x\}} \left\[ f\_x(\mathbf{x}) + (\mathbf{q}^t)^T \mathbf{A} \mathbf{x} + \frac{c}{2} |\mathbf{x} - \mathbf{x}^t|^2 \right] ]
+
+**Quadratic Majorizing**
+
+这个新的优化问题是一个二次近似问题，因为它包含一个二次项 (\frac{c}{2} |\mathbf{x} - \mathbf{x}^t|^2)。这种方法确保每一步迭代都在一个二次函数内进行，该二次函数“包住”了原始的目标函数，使得每一步都更容易求解，并且更新更稳定。
+
+#### 总结
+
+通过引入二次正则化项，优化问题变成了一个二次近似问题（quadratic majorizing problem）。这种方法不仅使每一步迭代更容易求解，而且通过控制步长确保了算法的稳定性和收敛性。这就是为什么在 ISTA 算法中引入二次正则化项的原因。
