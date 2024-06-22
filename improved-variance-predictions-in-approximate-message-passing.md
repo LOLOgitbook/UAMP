@@ -38,7 +38,39 @@ the LSL(in the Large System Limit) of the Bethe Free Energy (BFE). 和sum-produc
 
 <figure><img src=".gitbook/assets/Screenshot 2024-06-22 at 9.12.37 pm.png" alt=""><figcaption></figcaption></figure>
 
-$$s,\tau_s$$是拉格朗日系数。
+$$s,\tau_s$$是拉格朗日系数。采用的是ADMM算法。an ADMM update of the Lagrange multipliers s, and fixed point iterations for τp and τs. We detail two key steps.
+
+## （自己找的）ADMM
+
+交替方向乘子法（ADMM）是处理包括线性约束在内的优化问题的强大方法，特别适用于分解形式的大规模问题。对于具有形如 $$z = Ax$$约束的优化问题，ADMM通过将原问题分解为可分离的子问题，并在每个子问题间交替优化，同时更新对偶变量来维持约束关系。
+
+#### 基本思想
+
+ADMM结合了拉格朗日乘子法的优点和分块坐标下降法的思想，它通过引入一个对偶变量 $$\lambda$$（或多个对偶变量），将原始的优化问题转换为拉格朗日乘子形式的问题，并交替优化原变量和对偶变量。对于约束 $$z = Ax$$，ADMM的目标是最小化以下拉格朗日函数：
+
+$$
+L(x, z, \lambda) = f(x) + g(z) + \lambda^T (Ax - z) + \frac{\rho}{2} |Ax - z|^2
+$$
+
+这里 $$\lambda$$ 是对偶变量，   $$\rho$$ 是一个正的惩罚参数，它控制约束违反的惩罚强度。项 $$\frac{\rho}{2} |Ax - z|^2$$ 是一个增广项，用于稳定和加速算法的收敛。
+
+#### ADMM算法步骤
+
+ADMM通常包括以下几个步骤：
+
+1. **x 更新**：固定 ( z ) 和 $$\lambda$$ ，优化 ( x )。这个步骤涉及求解： $$x^{k+1} = \arg\min_x \left( f(x) + \lambda^T Ax + \frac{\rho}{2} |Ax - z^k|^2 \right)$$这通常是一个关于 ( x ) 的凸优化问题，可以使用传统的优化方法解决。
+2. **z 更新**：固定 ( x ) 和 $$\lambda$$ ，优化 ( z )。这个步骤涉及求解： $$z^{k+1} = \arg\min_z \left( g(z) - \lambda^T z + \frac{\rho}{2} |Ax^{k+1} - z|^2 \right)$$这步骤也是一个可能更简单的优化问题，尤其当 ( g ) 是简单函数时（如范数或指示函数）。
+3. **对偶变量更新**：更新 ( \lambda ) 以反映约束 ( z = Ax ) 的满足情况： $$\lambda^{k+1} = \lambda^k + \rho (Ax^{k+1} - z^{k+1})$$ 这一步实质上是在修正对偶变量，以更好地约束 ( x ) 和 ( z ) 之间的关系。
+
+## update of u
+
+
+
+<figure><img src=".gitbook/assets/Screenshot 2024-06-22 at 9.26.43 pm.png" alt=""><figcaption></figcaption></figure>
+
+公式9是对u求导=0
+
+
 
 ##
 
