@@ -4,6 +4,14 @@ coverY: 0
 
 # Improved Variance Predictions in Approximate Message Passing
 
+##
+
+##
+
+##
+
+##
+
 ## 2. UNITARILYTRANSFORMEDLINEARMODEL
 
 <figure><img src=".gitbook/assets/Screenshot 2024-06-22 at 6.00.20 pm.png" alt=""><figcaption></figcaption></figure>
@@ -12,13 +20,27 @@ $$p(x)=\prod p_{x_i}$$ ,其中各个变量是独立的，但它们并不遵循�
 
 ## 3. PROPOSED AMBUAMP
 
-the LSL(in the Large System Limit) of the Bethe Free Energy (BFE).
+the LSL(in the Large System Limit) of the Bethe Free Energy (BFE). 和sum-product GAMP是一样的energy function \[参考文章Fixed Points of Generalized Approximate Message Passing with Arbitrary Matrices].
+
+(1)
 
 <figure><img src=".gitbook/assets/Screenshot 2024-06-22 at 6.06.51 pm.png" alt=""><figcaption></figcaption></figure>
 
-其中 $$\tau_p$$ 是![](<.gitbook/assets/Screenshot 2024-06-22 at 8.51.14 pm.png>)
+其中 $$\tau_p$$ 是![](<.gitbook/assets/Screenshot 2024-06-22 at 8.51.14 pm.png>),H( ) is the  entropy.![](<.gitbook/assets/Screenshot 2024-06-22 at 8.56.19 pm.png>)
 
+其中， $$b(x_i) b(z_i)$$是belief , $$q(z_i)$$是高斯。 $$H_g(q,\tau)=D(b_z|q_z) + H(b_z), q_z=N(\mu_p,\tau_p),$$ $$\mu_p = E(z|b_z)$$
 
+(2) augmented 拉格朗日
+
+<figure><img src=".gitbook/assets/Screenshot 2024-06-22 at 9.11.55 pm.png" alt=""><figcaption></figcaption></figure>
+
+增加项目是
+
+<figure><img src=".gitbook/assets/Screenshot 2024-06-22 at 9.12.37 pm.png" alt=""><figcaption></figcaption></figure>
+
+$$s,\tau_s$$是拉格朗日系数。
+
+##
 
 ## 和UTAMP有关内容（AMBUAMP)
 
