@@ -4,6 +4,22 @@ coverY: 0
 
 # Improved Variance Predictions in Approximate Message Passing
 
+## 2. UNITARILYTRANSFORMEDLINEARMODEL
+
+<figure><img src=".gitbook/assets/Screenshot 2024-06-22 at 6.00.20 pm.png" alt=""><figcaption></figcaption></figure>
+
+$$p(x)=\prod p_{x_i}$$ ,其中各个变量是独立的，但它们并不遵循相同的分布。
+
+## 3. PROPOSED AMBUAMP
+
+the LSL(in the Large System Limit) of the Bethe Free Energy (BFE).
+
+<figure><img src=".gitbook/assets/Screenshot 2024-06-22 at 6.06.51 pm.png" alt=""><figcaption></figcaption></figure>
+
+其中 $$\tau_p$$ 是![](<.gitbook/assets/Screenshot 2024-06-22 at 8.51.14 pm.png>)
+
+
+
 ## 和UTAMP有关内容（AMBUAMP)
 
 文章中关于AMBUAMP（一种改进的近似消息传递算法）的内容主要包括以下几个方面：
