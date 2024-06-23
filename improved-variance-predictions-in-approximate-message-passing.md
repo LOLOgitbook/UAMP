@@ -4,13 +4,7 @@ coverY: 0
 
 # Improved Variance Predictions in Approximate Message Passing
 
-##
 
-##
-
-##
-
-##
 
 ## 2. UNITARILYTRANSFORMEDLINEARMODEL
 
