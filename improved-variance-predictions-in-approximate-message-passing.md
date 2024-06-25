@@ -4,8 +4,6 @@ coverY: 0
 
 # Improved Variance Predictions in Approximate Message Passing
 
-
-
 ## 2. UNITARILYTRANSFORMEDLINEARMODEL
 
 <figure><img src=".gitbook/assets/Screenshot 2024-06-22 at 6.00.20 pm.png" alt=""><figcaption></figcaption></figure>
@@ -46,7 +44,7 @@ $$
 L(x, z, \lambda) = f(x) + g(z) + \lambda^T (Ax - z) + \frac{\rho}{2} |Ax - z|^2
 $$
 
-这里 $$\lambda$$ 是对偶变量，   $$\rho$$ 是一个正的惩罚参数，它控制约束违反的惩罚强度。项 $$\frac{\rho}{2} |Ax - z|^2$$ 是一个增广项，用于稳定和加速算法的收敛。
+这里 $$\lambda$$ 是对偶变量，$$\rho$$ 是一个正的惩罚参数，它控制约束违反的惩罚强度。项 $$\frac{\rho}{2} |Ax - z|^2$$ 是一个增广项，用于稳定和加速算法的收敛。
 
 #### ADMM算法步骤
 
