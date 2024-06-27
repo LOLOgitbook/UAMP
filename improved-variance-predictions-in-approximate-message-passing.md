@@ -68,7 +68,15 @@ ADMM通常包括以下几个步骤：
 
 <figure><img src=".gitbook/assets/Screenshot 2024-06-26 at 6.10.06 pm.png" alt=""><figcaption></figcaption></figure>
 
+也是得到，高斯先验情况下
 
+<figure><img src=".gitbook/assets/Screenshot 2024-06-27 at 2.43.04 pm.png" alt=""><figcaption></figcaption></figure>
+
+
+
+##
+
+##
 
 ## 为什么引入辅助变量 ( v )&#x20;
 
