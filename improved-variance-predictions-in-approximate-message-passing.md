@@ -472,5 +472,19 @@ $$
 
 在这里，(D\_{\tau\_s^{(t)}, 2}) 表示由 (\tau\_s^{(t)}) 的二阶导数构成的对角矩阵，表示在偏导数转换过程中 (\tau\_s^{(t)}) 的影响需要被平方并以负号出现。
 
-#### &#x20;
+#### &#x20;要证明引理（21），即通过方程组（22）得到结果，我们需要构建特征值方程，并展示在大系统极限下这些方程的解如何收敛到我们需要的结果。以下是详细的推导过程。
+
+#### 引理（21）的复述
+
+引理（21）表明，对于任意有界谱范数的厄米矩阵 ( P ) 和从 Haar 分布中抽取的随机矩阵 ( V )，以及非负定矩阵 ( B ) 和对角矩阵 ( D )，以下收敛结果几乎必然成立： \[ \frac{1}{N} \text{tr} \left\[ B \left( VPV^T + D \right)^{-1} \right] - \frac{1}{N} \text{tr} \left\[ B \left( \bar{e}I + D \right)^{-1} \right] \xrightarrow{\text{a.s.\}} 0 ]
+
+#### 方程组（22）的复述
+
+方程组（22）是： \[ \bar{e} = \frac{1}{N} \text{tr} \left\[ P \left(  {e}P + (1 - \bar{e})I \right)^{-1} \right] ] \[ e = \frac{1}{N} \text{tr} \left\[ B \left( \bar{e}I + D \right)^{-1} \right] ]
+
+$$
+\bar{e} = \frac{1}{N} \text{tr} \left[ P \left( \bar{e}P + (1 - \bar{e})I \right)^{-1} \right] ] [ e = \frac{1}{N} \text{tr} \left[ B \left( \bar{e}I + D \right)^{-1} \right]
+$$
+
+####
 
