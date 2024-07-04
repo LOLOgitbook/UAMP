@@ -111,22 +111,113 @@ ADMM通常包括以下几个步骤：
 
     这意味着，当矩阵维度$$N$$趋向无穷大时，左侧表达式中的矩阵迹值与右侧表达式中的矩阵迹值几乎确定性地相等。
 * **标量**$$\bar{e}$$  ： $$\bar{e}$$  可以通过以下方程组的唯一解（不动点）来获得： $$\bar{e} = \frac{1}{N} \text{tr} \left[ \mathbf{P} \left( e \mathbf{P} + (1 - e \bar{e}) \mathbf{I} \right)^{-1} \right],   e = \frac{1}{N} \text{tr} \left[ \mathbf{B} (\bar{e} \mathbf{I} + \mathbf{D})^{-1} \right].$$&#x20;
+* 收敛结果的含义： 当$$N \to \infty$$ 时，矩阵$$B \left( VPV^T + D \right)^{-1}$$的归一化迹和矩阵$$B \left( eI + D \right)^{-1}$$ 的归一化迹几乎肯定相等。这意味着我们可以用后者来近似前者，从而简化大系统中的分析和计算。
 
-#### 应用和意义
+```python
+ 
+import numpy as np
 
-1. **确定性等价**： 这个引理中的确定性等价关系使得我们可以在研究大系统极限下的随机矩阵时，用一个确定性的表达式来替代随机矩阵的迹值计算，这大大简化了分析。
-2. **Haar 分布的作用**： Haar 分布确保了正交矩阵 (V) 的列向量是均匀分布的，这使得分析具有一般性和鲁棒性，不依赖于具体的随机矩阵实现。
-3. **大系统极限**： 在大系统极限下，很多复杂的随机矩阵问题可以简化为确定性的等价问题，从而使得理论分析和实际应用更加可行。
+# 生成满足条件的矩阵
+def generate_random_matrix(N, M):
+    H = np.random.randn(N, M)
+    Q, _ = np.linalg.qr(H)
+    return Q
 
-#### 具体例子
+# 定义参数
+N = 1000 # 大小N
+M = 1000 # 大小M
+P = np.random.randn(M, M)
+P = (P + P.T) / 2  # 生成Hermitian矩阵
+D = np.diag(np.random.rand(M) + 1)  # 生成正对角矩阵
+B = np.random.rand(M, M)
+B = (B + B.T) / 2  # 生成非负定矩阵
 
-考虑一个信号处理问题，其中信号通过一个随机线性系统传输。系统矩阵 (A) 可以表示为 (A = U \Sigma V^T)。利用这个引理，我们可以有效地估计信号在传输过程中的变化，而不需要直接处理复杂的随机矩阵，只需要处理其确定性等价形式。
+# 计算公式 (21)
+V = generate_random_matrix(N, M)
+VPVt = np.dot(np.dot(V, P), V.T)  # (N x M) (M x M) (M x N) => (N x N)
+term1 = np.trace(np.dot(B, np.linalg.inv(VPVt[:M, :M] + D))) / N  # 仅取 (M x M) 部分计算
 
-通过这个引理，我们可以获得大系统极限下的各种统计性质，包括矩阵迹、特征值分布等，从而为信号处理、机器学习等领域的算法设计提供理论支持。
+# 初始化 e
+e = 0.1  # 初始值，可以调整
 
+# 计算公式 (22) 直到收敛
+tolerance = 1e-6
+max_iterations = 1000
+for _ in range(max_iterations):
+    prev_e = e
+    e_bar = np.trace(np.dot(P, np.linalg.inv(e * P + (1 - e * prev_e) * np.eye(M)))) / N
+    e = np.trace(np.dot(B, np.linalg.inv(e_bar * np.eye(M) + D))) / N
+    if np.abs(e - prev_e) < tolerance:
+        break
 
+# 检查结果
+term2 = e
+result = term1 - term2
+print("Term1: ", term1)
+print("Term2: ", term2)
+print("Difference: ", result)
 
+print("e_bar: ", e_bar)
+print("e: ", e)
+结果：
+Difference:  0.006618403484386621
+e_bar:  94.79282041817801
+e:  0.005035693359617777
+```
 
+* MMSE solution
+
+从数学推导的角度来证明贝叶斯估计和LMMSE估计在大系统极限下趋于一致。&#x20;
+
+贝叶斯估计的目标是找到参数  $$\mathbf{x}$$  的后验分布$$\mathbf{p}(\mathbf{x} | \mathbf{y})$$，即：$$\mathbf{p}(\mathbf{x} | \mathbf{y}) \propto \mathbf{p}(\mathbf{y} | \mathbf{x}) \mathbf{p}(\mathbf{x})$$ 其中：
+
+* $$\mathbf{p}(\mathbf{y} | \mathbf{x})$$  是似然函数，表示在给定参数 $$\mathbf{x}$$  下观测数据  $$\mathbf{y}$$的概率分布。
+* &#x20;$$\mathbf{p}(\mathbf{x})$$ 是先验分布。
+
+假设先验分布 $$\mathbf{x} \sim \mathcal{N}(\mathbf{0}, \mathbf{C}_x)$$   ，观测噪声为高斯分布 $$\mathbf{n} \sim \mathcal{N}(\mathbf{0}, \sigma^2 \mathbf{I})$$ ，则似然函数为： $$\mathbf{p}(\mathbf{y} | \mathbf{x}) = \mathcal{N}(\mathbf{A} \mathbf{x}, \sigma^2 \mathbf{I})$$  &#x20;
+
+通过贝叶斯公式可以得到后验分布： $$\mathbf{p}(\mathbf{x} | \mathbf{y}) = \mathcal{N}(\mathbf{\mu}{\mathbf{x}|\mathbf{y}}, \mathbf{C}{\mathbf{x}|\mathbf{y}})$$  其中：
+
+* &#x20;$$(\mathbf{\mu}_{\mathbf{x}|\mathbf{y}} = \mathbf{C}{\mathbf{x}|\mathbf{y}} \mathbf{A}^T (\sigma^2 \mathbf{I} + \mathbf{A} \mathbf{C}_x \mathbf{A}^T)^{-1} \mathbf{y})$$ &#x20;
+*   &#x20;$$\mathbf{C}_{\mathbf{x}|\mathbf{y}} = (\mathbf{C}_x^{-1} + \mathbf{A}^T \mathbf{A} / \sigma^2)^{-1}$$
+
+    &#x20; &#x20;
+
+贝叶斯估计的期望值  $$\mathbf{\mu}_{\mathbf{x}|\mathbf{y}}$$ 就是贝叶斯最优估计。
+
+#### 3. **LMMSE估计**
+
+LMMSE估计是最小化参数估计值与真实值之间的均方误差。对于线性模型，LMMSE估计值为：  $$\hat{\mathbf{x}}_{\text{LMMSE}} = (\mathbf{A}^T \mathbf{A} + \sigma^2 \mathbf{C}_x^{-1})^{-1} \mathbf{A}^T \mathbf{y}$$ &#x20;
+
+#### 4. **大系统极限（LSL）下的一致性证明**
+
+在大系统极限下，观测矩阵 $$\mathbf{A}$$   的维度趋近于无穷大。此时，  $$\mathbf{A}$$ 的特征值分布和其协方差矩阵的结构趋于稳定，可以利用随机矩阵理论进行分析。
+
+我们考虑 (\mathbf{A}) 是 (N \times M) 的矩阵，当 (N, M \to \infty) 且 (\alpha = \frac{M}{N}) 为常数时，(\mathbf{A}^T \mathbf{A}) 的特征值分布趋于Marcenko-Pastur分布。这使得我们可以对相关矩阵进行近似处理。
+
+**贝叶斯估计的后验均值：**
+
+\[ \mathbf{\mu}_{\mathbf{x}|\mathbf{y\}} = \mathbf{C}_{\mathbf{x}|\mathbf{y\}} \mathbf{A}^T (\sigma^2 \mathbf{I} + \mathbf{A} \mathbf{C}\_x \mathbf{A}^T)^{-1} \mathbf{y} ]
+
+**LMMSE估计：**
+
+\[ \hat{\mathbf{x\}}\_{\text{LMMSE\}} = (\mathbf{A}^T \mathbf{A} + \sigma^2 \mathbf{C}\_x^{-1})^{-1} \mathbf{A}^T \mathbf{y} ]
+
+在大系统极限下，(\mathbf{A}^T \mathbf{A}) 的特征值趋于稳定，可以进行如下近似： \[ (\sigma^2 \mathbf{I} + \mathbf{A} \mathbf{C}\_x \mathbf{A}^T)^{-1} \approx \frac{1}{\sigma^2} \mathbf{I} - \frac{1}{\sigma^4} \mathbf{A} \mathbf{C}\_x \mathbf{A}^T ] \[ (\mathbf{A}^T \mathbf{A} + \sigma^2 \mathbf{C}\_x^{-1})^{-1} \approx \frac{1}{\mathbf{A}^T \mathbf{A\}} - \frac{1}{(\mathbf{A}^T \mathbf{A})^2} \sigma^2 \mathbf{C}\_x^{-1} ]
+
+利用这些近似，可以证明在大系统极限下，贝叶斯估计和LMMSE估计趋于一致，即： \[ \mathbf{\mu}_{\mathbf{x}|\mathbf{y\}} \approx \hat{\mathbf{x\}}_{\text{LMMSE\}} ]
+
+#### 5. **后验方差的一致性**
+
+贝叶斯估计的后验方差： \[ \mathbf{C}\_{\mathbf{x}|\mathbf{y\}} = (\mathbf{C}\_x^{-1} + \mathbf{A}^T \mathbf{A} / \sigma^2)^{-1} ]
+
+LMMSE估计的协方差矩阵： \[ \mathbf{C}\_{\text{LMMSE\}} = (\mathbf{A}^T \mathbf{A} + \sigma^2 \mathbf{C}\_x^{-1})^{-1} ]
+
+在大系统极限下，这两个矩阵的对角元素趋于相同，从而使得贝叶斯估计的后验方差与LMMSE估计的后验方差一致。
+
+#### 总结
+
+通过上述推导，我们可以看到，在大系统极限和i.i.d.矩阵A的条件下，贝叶斯估计和LMMSE估计在统计上趋于一致。具体来说，贝叶斯估计的后验均值和LMMSE估计的期望值趋于相同，贝叶斯估计的后验方差和LMMSE估计的协方差矩阵的对角元素趋于相同。这种一致性使得贝叶斯最优值等同于LMMSE的后验方差。&#x20;
 
 ##
 
