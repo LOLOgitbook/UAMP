@@ -24,15 +24,13 @@ Large System Analysis (LSA) 是指在大规模系统中进行简化的渐近性�
 
 状态演化（State Evolution, SE）方法依赖于测量矩阵 𝐴 的统计模型。
 
-####
-
-## 2. UNITARILYTRANSFORMEDLINEARMODEL
+### 4. UNITARILYTRANSFORMEDLINEARMODEL
 
 <figure><img src=".gitbook/assets/Screenshot 2024-06-22 at 6.00.20 pm.png" alt=""><figcaption></figcaption></figure>
 
 $$p(x)=\prod p_{x_i}$$ ,其中各个变量是独立的，但它们并不遵循相同的分布。
 
-## 3. PROPOSED AMBUAMP
+### 3. PROPOSED AMBUAMP
 
 the LSL(in the Large System Limit) of the Bethe Free Energy (BFE). 和sum-product GAMP是一样的energy function \[参考文章Fixed Points of Generalized Approximate Message Passing with Arbitrary Matrices].
 
@@ -95,6 +93,14 @@ ADMM通常包括以下几个步骤：
 <figure><img src=".gitbook/assets/Screenshot 2024-06-27 at 2.43.04 pm.png" alt=""><figcaption></figcaption></figure>
 
 ## Haar Large System Analysis
+
+*   确定模型
+
+    假设我们有一个 $$M \times N$$ 的测量矩阵$$A$$  ，其中 $$M < N$$ ，且矩阵$$A$$  满足 RRI 模型。我们考虑其奇异值分解 SVD：  $$A = U \Sigma V^T$$   其中： $$U$$   是  $$M \times M$$   的正交矩阵,$$\Sigma$$   是  $$M \times N$$  的对角矩阵， $$V$$   是  $$N \times N$$   的正交矩阵,在 RRI 模型中，矩阵$$V$$ 的列向量服从 Haar 分布。 在文章里，我们可以分析矩阵 $$A$$  的协方差矩阵 $$C = A^T A$$  的行为。
+
+
+
+
 
 
 
