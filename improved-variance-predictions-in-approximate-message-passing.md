@@ -4,6 +4,12 @@ coverY: 0
 
 # Improved Variance Predictions in Approximate Message Passing
 
+## 1. message passing中的方差
+
+在消息传递算法（如信念传播和期望传播）中，算法通过节点间传递消息来更新信念。在有限次迭代后，算法可能会收敛到一个近似解。对于均值（期望）的估计，消息传递算法通常能较快收敛，因为均值估计通常直接受消息更新规则的影响。
+
+然而，方差估计需要准确计算二阶矩（second-order moments），而消息传递算法中的累积误差（cumulative error）可能导致方差估计的不准确。消息传递算法中的局部近似和边缘化过程可能无法完全捕捉全局依赖结构，导致方差估计偏差。
+
 ## 2. UNITARILYTRANSFORMEDLINEARMODEL
 
 <figure><img src=".gitbook/assets/Screenshot 2024-06-22 at 6.00.20 pm.png" alt=""><figcaption></figcaption></figure>
