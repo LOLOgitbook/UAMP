@@ -4,11 +4,27 @@ coverY: 0
 
 # Improved Variance Predictions in Approximate Message Passing
 
-## 1. message passing中的方差
+### 1. message passing中的方差
 
 在消息传递算法（如信念传播和期望传播）中，算法通过节点间传递消息来更新信念。在有限次迭代后，算法可能会收敛到一个近似解。对于均值（期望）的估计，消息传递算法通常能较快收敛，因为均值估计通常直接受消息更新规则的影响。
 
 然而，方差估计需要准确计算二阶矩（second-order moments），而消息传递算法中的累积误差（cumulative error）可能导致方差估计的不准确。消息传递算法中的局部近似和边缘化过程可能无法完全捕捉全局依赖结构，导致方差估计偏差。
+
+### 2. Large System Analysis (LSA)
+
+Large System Analysis (LSA) 是指在大规模系统中进行简化的渐近性能分析。在处理大规模数据和复杂模型时，直接求解和分析通常非常困难。因此，LSA 提供了一种通过分析系统在极限情况下的行为来简化分析的方法。通过渐近分析，可以确定算法在大规模系统中的性能极限。
+
+### **3.状态演化（State Evolution, SE）**
+
+状态演化是 LSA 中一个重要的工具，它描述了 AMP 算法在每次迭代中的均方误差（MSE）如何变化。通过 SE，可以建立一个递归方程，来跟踪 AMP 每次迭代的 MSE。
+
+通过状态演化，可以证明在大系统极限下，AMP 的 MSE 收敛到最小均方误差（LMMSE）。这意味着 AMP 算法在这种情况下是最优的。
+
+* **MMSE（最小均方误差）**：MMSE 是在给定观测数据 y  的情况下，对信号 x 的最优估计，其估计误差的均方值最小。
+
+状态演化（State Evolution, SE）方法依赖于测量矩阵 𝐴 的统计模型。
+
+####
 
 ## 2. UNITARILYTRANSFORMEDLINEARMODEL
 
