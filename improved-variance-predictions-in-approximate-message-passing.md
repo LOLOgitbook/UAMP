@@ -96,9 +96,11 @@ ADMM通常包括以下几个步骤：
 
 *   确定模型
 
-    假设我们有一个 $$M \times N$$ 的测量矩阵$$A$$  ，其中 $$M < N$$ ，且矩阵$$A$$  满足 RRI 模型。我们考虑其奇异值分解 SVD：  $$A = U \Sigma V^T$$   其中： $$U$$   是  $$M \times M$$   的正交矩阵,$$\Sigma$$   是  $$M \times N$$  的对角矩阵， $$V$$   是  $$N \times N$$   的正交矩阵,在 RRI 模型中，矩阵$$V$$ 的列向量服从 Haar 分布。 在文章里，我们可以分析矩阵 $$A$$  的协方差矩阵 $$C = A^T A$$  的行为。
+    假设我们有一个 $$M \times N$$ 的测量矩阵$$A$$  ，其中 $$M < N$$ ，且矩阵$$A$$  满足 RRI 模型。我们考虑其奇异值分解 SVD:$$A = U \Sigma V^T$$   其中： $$U$$是  $$M \times M$$的正交矩阵,$$\Sigma$$是 $$M \times N$$的对角矩阵， $$V$$是  $$N \times N$$的正交矩阵,在 RRI 模型中，矩阵$$V$$ 的列向量服从 Haar 分布。 在文章里，我们可以分析矩阵 $$A$$  的协方差矩阵 $$C = A^T A$$  的行为。
 * 当我们讨论矩阵在大系统极限下的谱性质时，我们关注的是当矩阵的维度趋向无穷大时，其特征值和特征向量的分布和行为。
 * 引理 1&#x20;
+
+## &#x20;Lemma 1
 
 引理 1 提供了一种重要的渐近收敛结果。具体来说：
 
@@ -167,7 +169,7 @@ e:  0.005035693359617777
 
 * MMSE solution
 
-从数学推导的角度来证明贝叶斯估计和LMMSE估计在大系统极限下趋于一致。&#x20;
+证明贝叶斯估计和LMMSE估计在大系统极限下趋于一致。&#x20;
 
 贝叶斯估计的目标是找到参数  $$\mathbf{x}$$  的后验分布$$\mathbf{p}(\mathbf{x} | \mathbf{y})$$，即：$$\mathbf{p}(\mathbf{x} | \mathbf{y}) \propto \mathbf{p}(\mathbf{y} | \mathbf{x}) \mathbf{p}(\mathbf{x})$$ 其中：
 
@@ -176,7 +178,9 @@ e:  0.005035693359617777
 
 假设先验分布 $$\mathbf{x} \sim \mathcal{N}(\mathbf{0}, \mathbf{C}_x)$$   ，观测噪声为高斯分布 $$\mathbf{n} \sim \mathcal{N}(\mathbf{0}, \sigma^2 \mathbf{I})$$ ，则似然函数为： $$\mathbf{p}(\mathbf{y} | \mathbf{x}) = \mathcal{N}(\mathbf{A} \mathbf{x}, \sigma^2 \mathbf{I})$$  &#x20;
 
-通过贝叶斯公式可以得到后验分布： $$\mathbf{p}(\mathbf{x} | \mathbf{y}) = \mathcal{N}(\mathbf{\mu}{\mathbf{x}|\mathbf{y}}, \mathbf{C}{\mathbf{x}|\mathbf{y}})$$  其中：
+通过贝叶斯公式可以得到后验分布： $$\mathbf{p}(\mathbf{x} | \mathbf{y}) = \mathcal{N}(\mathbf{\mu}_{\mathbf{x}|\mathbf{y}}, \mathbf{C}_{\mathbf{x}|\mathbf{y}})$$
+
+&#x20; 其中：
 
 * &#x20;$$(\mathbf{\mu}_{\mathbf{x}|\mathbf{y}} = \mathbf{C}{\mathbf{x}|\mathbf{y}} \mathbf{A}^T (\sigma^2 \mathbf{I} + \mathbf{A} \mathbf{C}_x \mathbf{A}^T)^{-1} \mathbf{y})$$ &#x20;
 *   &#x20;$$\mathbf{C}_{\mathbf{x}|\mathbf{y}} = (\mathbf{C}_x^{-1} + \mathbf{A}^T \mathbf{A} / \sigma^2)^{-1}$$
@@ -193,25 +197,29 @@ LMMSE估计是最小化参数估计值与真实值之间的均方误差。对于
 
 在大系统极限下，观测矩阵 $$\mathbf{A}$$   的维度趋近于无穷大。此时，  $$\mathbf{A}$$ 的特征值分布和其协方差矩阵的结构趋于稳定，可以利用随机矩阵理论进行分析。
 
-我们考虑 (\mathbf{A}) 是 (N \times M) 的矩阵，当 (N, M \to \infty) 且 (\alpha = \frac{M}{N}) 为常数时，(\mathbf{A}^T \mathbf{A}) 的特征值分布趋于Marcenko-Pastur分布。这使得我们可以对相关矩阵进行近似处理。
+我们考虑 $$\mathbf{A}$$ 是 $$N \times M$$的矩阵，当 $$N, M \to \infty$$ 且 $$\alpha = \frac{M}{N}$$为常数时， $$\mathbf{A}^T \mathbf{A}$$的特征值分布趋于Marcenko-Pastur分布。这使得我们可以对相关矩阵进行近似处理。
 
 **贝叶斯估计的后验均值：**
 
-\[ \mathbf{\mu}_{\mathbf{x}|\mathbf{y\}} = \mathbf{C}_{\mathbf{x}|\mathbf{y\}} \mathbf{A}^T (\sigma^2 \mathbf{I} + \mathbf{A} \mathbf{C}\_x \mathbf{A}^T)^{-1} \mathbf{y} ]
+$$
+\mathbf{\mu}{\mathbf{x}|\mathbf{y}} = \mathbf{C}{\mathbf{x}|\mathbf{y}} \mathbf{A}^T (\sigma^2 \mathbf{I} + \mathbf{A} \mathbf{C}_x \mathbf{A}^T)^{-1} \mathbf{y}
+$$
 
 **LMMSE估计：**
 
-\[ \hat{\mathbf{x\}}\_{\text{LMMSE\}} = (\mathbf{A}^T \mathbf{A} + \sigma^2 \mathbf{C}\_x^{-1})^{-1} \mathbf{A}^T \mathbf{y} ]
+$$
+\hat{\mathbf{x}}_{\text{LMMSE}} = (\mathbf{A}^T \mathbf{A} + \sigma^2 \mathbf{C}_x^{-1})^{-1} \mathbf{A}^T \mathbf{y}
+$$
 
-在大系统极限下，(\mathbf{A}^T \mathbf{A}) 的特征值趋于稳定，可以进行如下近似： \[ (\sigma^2 \mathbf{I} + \mathbf{A} \mathbf{C}\_x \mathbf{A}^T)^{-1} \approx \frac{1}{\sigma^2} \mathbf{I} - \frac{1}{\sigma^4} \mathbf{A} \mathbf{C}\_x \mathbf{A}^T ] \[ (\mathbf{A}^T \mathbf{A} + \sigma^2 \mathbf{C}\_x^{-1})^{-1} \approx \frac{1}{\mathbf{A}^T \mathbf{A\}} - \frac{1}{(\mathbf{A}^T \mathbf{A})^2} \sigma^2 \mathbf{C}\_x^{-1} ]
+在大系统极限下， $$\mathbf{A}^T \mathbf{A}$$的特征值趋于稳定，可以进行如下近似： $$(\sigma^2 \mathbf{I} + \mathbf{A} \mathbf{C}_x \mathbf{A}^T)^{-1} \approx \frac{1}{\sigma^2} \mathbf{I} - \frac{1}{\sigma^4} \mathbf{A} \mathbf{C}_x \mathbf{A}^T ] [ (\mathbf{A}^T \mathbf{A} + \sigma^2 \mathbf{C}_x^{-1})^{-1} \approx \frac{1}{\mathbf{A}^T \mathbf{A}} - \frac{1}{(\mathbf{A}^T \mathbf{A})^2} \sigma^2 \mathbf{C}_x^{-1}$$
 
-利用这些近似，可以证明在大系统极限下，贝叶斯估计和LMMSE估计趋于一致，即： \[ \mathbf{\mu}_{\mathbf{x}|\mathbf{y\}} \approx \hat{\mathbf{x\}}_{\text{LMMSE\}} ]
+利用这些近似，可以证明在大系统极限下，贝叶斯估计和LMMSE估计趋于一致，即：   $$\mathbf{\mu}_{\mathbf{x}|\mathbf{y}} \approx \hat{\mathbf{x}}_{\text{LMMSE}}$$
 
 #### 5. **后验方差的一致性**
 
-贝叶斯估计的后验方差： \[ \mathbf{C}\_{\mathbf{x}|\mathbf{y\}} = (\mathbf{C}\_x^{-1} + \mathbf{A}^T \mathbf{A} / \sigma^2)^{-1} ]
+贝叶斯估计的后验方差： $$\mathbf{C}_{\mathbf{x}|\mathbf{y}} = (\mathbf{C}_x^{-1} + \mathbf{A}^T \mathbf{A} / \sigma^2)^{-1}$$
 
-LMMSE估计的协方差矩阵： \[ \mathbf{C}\_{\text{LMMSE\}} = (\mathbf{A}^T \mathbf{A} + \sigma^2 \mathbf{C}\_x^{-1})^{-1} ]
+LMMSE估计的协方差矩阵：$$\mathbf{C}_{\text{LMMSE}} = (\mathbf{A}^T \mathbf{A} + \sigma^2 \mathbf{C}_x^{-1})^{-1}$$
 
 在大系统极限下，这两个矩阵的对角元素趋于相同，从而使得贝叶斯估计的后验方差与LMMSE估计的后验方差一致。
 
