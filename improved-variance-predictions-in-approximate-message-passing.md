@@ -113,10 +113,9 @@ ADMM通常包括以下几个步骤：
 
     这意味着，当矩阵维度$$N$$趋向无穷大时，左侧表达式中的矩阵迹值与右侧表达式中的矩阵迹值几乎确定性地相等。
 * **标量**$$\bar{e}$$  ： $$\bar{e}$$  可以通过以下方程组的唯一解（不动点）来获得： $$\bar{e} = \frac{1}{N} \text{tr} \left[ \mathbf{P} \left( e \mathbf{P} + (1 - e \bar{e}) \mathbf{I} \right)^{-1} \right],   e = \frac{1}{N} \text{tr} \left[ \mathbf{B} (\bar{e} \mathbf{I} + \mathbf{D})^{-1} \right].$$&#x20;
-* 收敛结果的含义： 当$$N \to \infty$$ 时，矩阵$$B \left( VPV^T + D \right)^{-1}$$的归一化迹和矩阵$$B \left( eI + D \right)^{-1}$$ 的归一化迹几乎肯定相等。这意味着我们可以用后者来近似前者，从而简化大系统中的分析和计算。
+* 收敛结果的含义： 当$$N \to \infty$$ 时，矩阵$$B \left( VPV^T + D \right)^{-1}$$的归一化迹和矩阵$$B \left( eI + D \right)^{-1}$$ 的归一化迹几乎肯定相等。这意味着我们可以用后者来近似前者，从而简化大系统中的分析和计算。&#x20;
 
 ```python
- 
 import numpy as np
 
 # 生成满足条件的矩阵
@@ -161,7 +160,7 @@ print("Difference: ", result)
 
 print("e_bar: ", e_bar)
 print("e: ", e)
-结果：
+仿真结果：
 Difference:  0.006618403484386621
 e_bar:  94.79282041817801
 e:  0.005035693359617777
@@ -169,7 +168,7 @@ e:  0.005035693359617777
 
 * MMSE solution
 
-证明贝叶斯估计和LMMSE估计在大系统极限下趋于一致。&#x20;
+证明贝叶斯估计和LMMSE估计在大系统极限下趋于一致。  &#x20;
 
 贝叶斯估计的目标是找到参数  $$\mathbf{x}$$  的后验分布$$\mathbf{p}(\mathbf{x} | \mathbf{y})$$，即：$$\mathbf{p}(\mathbf{x} | \mathbf{y}) \propto \mathbf{p}(\mathbf{y} | \mathbf{x}) \mathbf{p}(\mathbf{x})$$ 其中：
 
@@ -183,9 +182,7 @@ e:  0.005035693359617777
 &#x20; 其中：
 
 * &#x20;$$(\mathbf{\mu}_{\mathbf{x}|\mathbf{y}} = \mathbf{C}{\mathbf{x}|\mathbf{y}} \mathbf{A}^T (\sigma^2 \mathbf{I} + \mathbf{A} \mathbf{C}_x \mathbf{A}^T)^{-1} \mathbf{y})$$ &#x20;
-*   &#x20;$$\mathbf{C}_{\mathbf{x}|\mathbf{y}} = (\mathbf{C}_x^{-1} + \mathbf{A}^T \mathbf{A} / \sigma^2)^{-1}$$
-
-    &#x20; &#x20;
+* &#x20;$$\mathbf{C}_{\mathbf{x}|\mathbf{y}} = (\mathbf{C}_x^{-1} + \mathbf{A}^T \mathbf{A} / \sigma^2)^{-1}$$
 
 贝叶斯估计的期望值  $$\mathbf{\mu}_{\mathbf{x}|\mathbf{y}}$$ 就是贝叶斯最优估计。
 
@@ -198,6 +195,8 @@ LMMSE估计是最小化参数估计值与真实值之间的均方误差。对于
 在大系统极限下，观测矩阵 $$\mathbf{A}$$   的维度趋近于无穷大。此时，  $$\mathbf{A}$$ 的特征值分布和其协方差矩阵的结构趋于稳定，可以利用随机矩阵理论进行分析。
 
 我们考虑 $$\mathbf{A}$$ 是 $$N \times M$$的矩阵，当 $$N, M \to \infty$$ 且 $$\alpha = \frac{M}{N}$$为常数时， $$\mathbf{A}^T \mathbf{A}$$的特征值分布趋于Marcenko-Pastur分布。这使得我们可以对相关矩阵进行近似处理。
+
+
 
 **贝叶斯估计的后验均值：**
 
@@ -225,7 +224,27 @@ LMMSE估计的协方差矩阵：$$\mathbf{C}_{\text{LMMSE}} = (\mathbf{A}^T \mat
 
 #### 总结
 
-通过上述推导，我们可以看到，在大系统极限和i.i.d.矩阵A的条件下，贝叶斯估计和LMMSE估计在统计上趋于一致。具体来说，贝叶斯估计的后验均值和LMMSE估计的期望值趋于相同，贝叶斯估计的后验方差和LMMSE估计的协方差矩阵的对角元素趋于相同。这种一致性使得贝叶斯最优值等同于LMMSE的后验方差。&#x20;
+通过上述推导，我们可以看到，在大系统极限和i.i.d.矩阵A的条件下，贝叶斯估计和LMMSE估计在统计上趋于一致。具体来说，贝叶斯估计的后验均值和LMMSE估计的期望值趋于相同，贝叶斯估计的后验方差和LMMSE估计的协方差矩阵的对角元素趋于相同。这种一致性使得贝叶斯最优值等同于LMMSE的后验方差。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&#x20;
 
 ##
 
