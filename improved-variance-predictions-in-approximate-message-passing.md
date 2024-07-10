@@ -168,21 +168,21 @@ e:  0.005035693359617777
 
 * MMSE solution
 
-证明贝叶斯估计和LMMSE估计在大系统极限下趋于一致。  &#x20;
+_**证明贝叶斯估计和LMMSE估计在大系统极限下趋于一致。**_  &#x20;
 
-贝叶斯估计的目标是找到参数  $$\mathbf{x}$$  的后验分布$$\mathbf{p}(\mathbf{x} | \mathbf{y})$$，即：$$\mathbf{p}(\mathbf{x} | \mathbf{y}) \propto \mathbf{p}(\mathbf{y} | \mathbf{x}) \mathbf{p}(\mathbf{x})$$ 其中：
+贝叶斯估计的目标是找到参数$$\mathbf{x}$$的后验分布$$\mathbf{p}(\mathbf{x} | \mathbf{y})$$，即：$$\mathbf{p}(\mathbf{x} | \mathbf{y}) \propto \mathbf{p}(\mathbf{y} | \mathbf{x}) \mathbf{p}(\mathbf{x})$$ 其中：
 
-* $$\mathbf{p}(\mathbf{y} | \mathbf{x})$$  是似然函数，表示在给定参数 $$\mathbf{x}$$  下观测数据  $$\mathbf{y}$$的概率分布。
-* &#x20;$$\mathbf{p}(\mathbf{x})$$ 是先验分布。
+* $$\mathbf{p}(\mathbf{y} | \mathbf{x})$$是似然函数,表示在给定参数 $$\mathbf{x}$$下观测数据$$\mathbf{y}$$的概率分布。
+* $$\mathbf{p}(\mathbf{x})$$是先验分布。
 
-假设先验分布 $$\mathbf{x} \sim \mathcal{N}(\mathbf{0}, \mathbf{C}_x)$$   ，观测噪声为高斯分布 $$\mathbf{n} \sim \mathcal{N}(\mathbf{0}, \sigma^2 \mathbf{I})$$ ，则似然函数为： $$\mathbf{p}(\mathbf{y} | \mathbf{x}) = \mathcal{N}(\mathbf{A} \mathbf{x}, \sigma^2 \mathbf{I})$$  &#x20;
+假设先验分布 $$\mathbf{x} \sim \mathcal{N}(\mathbf{0}, \mathbf{C}_x)$$，观测噪声为高斯分布 $$\mathbf{n} \sim \mathcal{N}(\mathbf{0}, \sigma^2 \mathbf{I})$$ ，则似然函数为： $$\mathbf{p}(\mathbf{y} | \mathbf{x}) = \mathcal{N}(\mathbf{A} \mathbf{x}, \sigma^2 \mathbf{I})$$  &#x20;
 
 通过贝叶斯公式可以得到后验分布： $$\mathbf{p}(\mathbf{x} | \mathbf{y}) = \mathcal{N}(\mathbf{\mu}_{\mathbf{x}|\mathbf{y}}, \mathbf{C}_{\mathbf{x}|\mathbf{y}})$$
 
 &#x20; 其中：
 
-* &#x20;$$(\mathbf{\mu}_{\mathbf{x}|\mathbf{y}} = \mathbf{C}{\mathbf{x}|\mathbf{y}} \mathbf{A}^T (\sigma^2 \mathbf{I} + \mathbf{A} \mathbf{C}_x \mathbf{A}^T)^{-1} \mathbf{y})$$ &#x20;
 * &#x20;$$\mathbf{C}_{\mathbf{x}|\mathbf{y}} = (\mathbf{C}_x^{-1} + \mathbf{A}^T \mathbf{A} / \sigma^2)^{-1}$$
+* &#x20;$$(\mathbf{\mu}_{\mathbf{x}|\mathbf{y}} = \mathbf{C}{\mathbf{x}|\mathbf{y}} \mathbf{A}^T (\sigma^2 \mathbf{I} + \mathbf{A} \mathbf{C}_x \mathbf{A}^T)^{-1} \mathbf{y})$$ &#x20;
 
 贝叶斯估计的期望值  $$\mathbf{\mu}_{\mathbf{x}|\mathbf{y}}$$ 就是贝叶斯最优估计。
 
@@ -190,13 +190,55 @@ e:  0.005035693359617777
 
 LMMSE估计是最小化参数估计值与真实值之间的均方误差。对于线性模型，LMMSE估计值为：  $$\hat{\mathbf{x}}_{\text{LMMSE}} = (\mathbf{A}^T \mathbf{A} + \sigma^2 \mathbf{C}_x^{-1})^{-1} \mathbf{A}^T \mathbf{y}$$ &#x20;
 
+#### LMMSE估计LMMSE估计值是使得均方误差最小化的估计值。对于线性模型，LMMSE估计值 $$\hat{\mathbf{x}}_{\text{LMMSE}}$$ 是 $$\mathbf{y}$$    的线性函数：
+
+&#x20;$$\hat{\mathbf{x}}_{\text{LMMSE}} = \mathbf{W} \mathbf{y} + \mathbf{b}$$
+
+#### 求解LMMSE估计
+
+为了找到 $$\mathbf{W}$$ 和 $$\mathbf{b}$$，我们需要最小化以下均方误差：
+
+$$
+J(\mathbf{W}, \mathbf{b}) = \mathbb{E}[(\mathbf{x} - (\mathbf{W} \mathbf{y} + \mathbf{b}))^2]
+$$
+
+通过计算导数并设置为零，我们可以得到：
+
+1. **均值：**
+
+LMMSE估计的均值通过条件期望求得：
+
+$$
+\mathbf{\mu}_{\mathbf{x}|\mathbf{y}} = \mathbf{C}_x \mathbf{A}^T (\mathbf{A} \mathbf{C}_x \mathbf{A}^T + \sigma^2 \mathbf{I})^{-1} (\mathbf{y} - \mathbf{A} \mathbf{\mu}_x) + \mathbf{\mu}_x
+$$
+
+2. **协方差：**
+
+LMMSE估计的协方差可以通过条件协方差求得：
+
+$$
+\mathbf{C}_{\mathbf{x}|\mathbf{y}} = \mathbf{C}_x - \mathbf{C}_x \mathbf{A}^T (\mathbf{A} \mathbf{C}_x \mathbf{A}^T + \sigma^2 \mathbf{I})^{-1} \mathbf{A} \mathbf{C}_x
+$$
+
+利用了 Woodbury矩阵恒等式，又称为 矩阵求逆引理，可以证明这两个等式等价
+
+&#x20;1\. $$\mathbf{C}_{\mathbf{x}|\mathbf{y}} = (\mathbf{C}_x^{-1} + \mathbf{A}^T \sigma^{-2} \mathbf{I} \mathbf{A})^{-1}$$
+
+2\. $$\mathbf{C}_{\mathbf{x}|\mathbf{y}} = \mathbf{C}_x - \mathbf{C}_x \mathbf{A}^T (\mathbf{A} \mathbf{C}_x \mathbf{A}^T + \sigma^2 \mathbf{I})^{-1} \mathbf{A} \mathbf{C}_x$$
+
+Woodbury矩阵恒等式的通用形式如下：
+
+$$
+(\mathbf{A} + \mathbf{U} \mathbf{C} \mathbf{V})^{-1} = \mathbf{A}^{-1} - \mathbf{A}^{-1} \mathbf{U} (\mathbf{C}^{-1} + \mathbf{V} \mathbf{A}^{-1} \mathbf{U})^{-1} \mathbf{V} \mathbf{A}^{-1}
+$$
+
+&#x20;这确保了LMMSE估计和贝叶斯最优估计在高斯模型下具有一致性。
+
 #### 4. **大系统极限（LSL）下的一致性证明**
 
 在大系统极限下，观测矩阵 $$\mathbf{A}$$   的维度趋近于无穷大。此时，  $$\mathbf{A}$$ 的特征值分布和其协方差矩阵的结构趋于稳定，可以利用随机矩阵理论进行分析。
 
 我们考虑 $$\mathbf{A}$$ 是 $$N \times M$$的矩阵，当 $$N, M \to \infty$$ 且 $$\alpha = \frac{M}{N}$$为常数时， $$\mathbf{A}^T \mathbf{A}$$的特征值分布趋于Marcenko-Pastur分布。这使得我们可以对相关矩阵进行近似处理。
-
-
 
 **贝叶斯估计的后验均值：**
 
@@ -225,6 +267,40 @@ LMMSE估计的协方差矩阵：$$\mathbf{C}_{\text{LMMSE}} = (\mathbf{A}^T \mat
 #### 总结
 
 通过上述推导，我们可以看到，在大系统极限和i.i.d.矩阵A的条件下，贝叶斯估计和LMMSE估计在统计上趋于一致。具体来说，贝叶斯估计的后验均值和LMMSE估计的期望值趋于相同，贝叶斯估计的后验方差和LMMSE估计的协方差矩阵的对角元素趋于相同。这种一致性使得贝叶斯最优值等同于LMMSE的后验方差。
+
+6. &#x20;均方误差（MSE）等于MMSE协方差矩阵的迹除以样本数 N： $$\text{MSE} = \frac{1}{N} \operatorname{tr}[\mathbf{C}_{\text{MMSE}}]$$
+
+均方误差定义为： $$\text{MSE} = \mathbb{E}\left[ (\mathbf{x} - \hat{\mathbf{x}})^T (\mathbf{x} - \hat{\mathbf{x}}) \right]$$
+
+**最小均方误差（MMSE）估计**
+
+&#x20;_对于高斯分布，MMSE估计的协方差矩阵_可以表示为： $$\mathbf{C}{\text{MMSE}} = \mathbb{E}\left[ (\mathbf{x} - \hat{\mathbf{x}}{\text{MMSE}}) (\mathbf{x} - \hat{\mathbf{x}}_{\text{MMSE}})^T \right]$$
+
+迹是矩阵对角线元素的和 $$\operatorname{tr}(\mathbf{C}{\text{MMSE}}) = \sum{i=1}^{N} \mathbf{C}_{\text{MMSE}, ii}$$
+
+
+
+均方误差是所有变量误差的期望值之和，可以写成： $$\text{MSE} = \frac{1}{N} \sum_{i=1}^{N} \mathbb{E}[(x_i - \hat{x}_i)^2]$$
+
+协方差矩阵 $$\mathbf{C}_{\text{MMSE}}$$ 表示所有变量误差的协方差：
+
+$$\mathbf{C}{\text{MMSE}} = \mathbb{E} \left[ (\mathbf{x} - \hat{\mathbf{x}}{\text{MMSE}}) (\mathbf{x} - \hat{\mathbf{x}}_{\text{MMSE}})^T \right]$$
+
+**协方差矩阵的对角线元素**：
+
+对角线元素表示第 i个变量的方差：
+
+$$\mathbf{C}{\text{MMSE}, ii} = \mathbb{E}\left[ (x_i - \hat{x}{\text{MMSE}, i})^2 \right]$$
+
+&#x20;**矩阵迹和对角线元素的关系**：
+
+矩阵的迹是其对角线元素的和，因此：
+
+&#x20;$$\operatorname{tr}(\mathbf{C}{\text{MMSE}}) = \sum_i{ }\mathbf{C}_{\text{MMSE}, ii}$$
+
+#### &#x20;  &#x20;
+
+#### &#x20;
 
 
 
