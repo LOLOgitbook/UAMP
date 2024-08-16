@@ -1,6 +1,6 @@
 # AMP公式
 
-## 公式(7)推导
+## 《Approximate Message Passing with Unitary Transformation》 公式(7)推导
 
 公式(7)是：
 
@@ -10,45 +10,45 @@ $$
 
 其中：
 
-* $C$ 是一个复数矩阵。
-* $d$ 是一个向量。
-* $\text{Diag}(d)$ 是以向量 $d$ 为对角线元素的对角矩阵。
-* $C^H$ 是 $C$ 的共轭转置矩阵。
-* $D1$ 表示从矩阵 $(C \cdot \text{Diag}(d) \cdot C^H)$ 中提取对角元素组成的向量。
+* $$C$$ 是一个复数矩阵。
+* $$d$$ 是一个向量。
+* $$\text{Diag}(d)$$ 是以向量 $$d$$ 为对角线元素的对角矩阵。
+* $$C^H$$ 是 $$C$$ 的共轭转置矩阵。
+* $$D1$$ 表示从矩阵 $$(C \cdot \text{Diag}(d) \cdot C^H)$$ 中提取对角元素组成的向量。
 
 ### 1. 推导左边的表达式
 
-首先，$|C|^2$ 表示矩阵 $C$ 每个元素的模平方：
+首先，$$|C|^2$$ 表示矩阵 $$C$$ 每个元素的模平方：
 
 $$
 |C|^2 = C \cdot \overline{C}
 $$
 
-这里的 $\overline{C}$ 表示 $C$ 的共轭矩阵（每个元素取共轭），所以 $|C|^2$ 表示 $C$ 中每个元素的模平方。
+这里的 $$\overline{C}$$ 表示 $$C$$ 的共轭矩阵（每个元素取共轭），所以 $$|C|^2$$ 表示 $$C$$ 中每个元素的模平方。
 
-现在，计算 $|C|^2 \cdot d$：
+现在，计算 $$|C|^2 \cdot d$$：
 
 $$
 (|C|^2 \cdot d)_i = \sum_{j} |C_{ij}|^2 d_j
 $$
 
-其中，$|C\_{ij}|^2 = C\_{ij} \overline{C\_{ij\}}$ 表示 $C$ 的 $ij$ 元素的模平方。
+其中，$$|C_{ij}|^2 = C_{ij} \overline{C_{ij}}$$ 表示 $$C$$ 的 $$ij$$ 元素的模平方。
 
 ### 2. 推导右边的表达式
 
-现在我们来看右边的表达式 $(C \cdot \text{Diag}(d) \cdot C^H)D1$：
+现在我们来看右边的表达式 $$(C \cdot \text{Diag}(d) \cdot C^H)D1$$：
 
-1.  计算 $C \cdot \text{Diag}(d)$：
+1.  计算 $$C \cdot \text{Diag}(d)$$：
 
     $$
     (C \cdot \text{Diag}(d))_{ij} = C_{ij} \cdot d_j
     $$
-2.  然后，计算 $(C \cdot \text{Diag}(d) \cdot C^H)$：
+2.  然后，计算 $$(C \cdot \text{Diag}(d) \cdot C^H)$$：
 
     $$
     (C \cdot \text{Diag}(d) \cdot C^H)_{ik} = \sum_{j} C_{ij} \cdot d_j \cdot \overline{C_{kj}}
     $$
-3.  提取对角元素 $D1$：
+3.  提取对角元素 $$D1$$：
 
     $$
     D1 = \text{diag}\left(C \cdot \text{Diag}(d) \cdot C^H\right) = \left[\sum_{j} C_{ij} \cdot d_j \cdot \overline{C_{ij}}\right]_{i}
