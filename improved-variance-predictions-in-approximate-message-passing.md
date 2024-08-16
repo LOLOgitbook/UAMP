@@ -190,7 +190,7 @@ _**证明贝叶斯估计和LMMSE估计在大系统极限下趋于一致。**_  &
 
 LMMSE估计是最小化参数估计值与真实值之间的均方误差。对于线性模型，LMMSE估计值为：  $$\hat{\mathbf{x}}_{\text{LMMSE}} = (\mathbf{A}^T \mathbf{A} + \sigma^2 \mathbf{C}_x^{-1})^{-1} \mathbf{A}^T \mathbf{y}$$ &#x20;
 
-#### LMMSE估计LMMSE估计值是使得均方误差最小化的估计值。对于线性模型，LMMSE估计值 $$\hat{\mathbf{x}}_{\text{LMMSE}}$$ 是 $$\mathbf{y}$$    的线性函数：
+LMMSE估计LMMSE估计值是使得均方误差最小化的估计值。对于线性模型，LMMSE估计值 $$\hat{\mathbf{x}}_{\text{LMMSE}}$$ 是 $$\mathbf{y}$$    的线性函数：
 
 &#x20;$$\hat{\mathbf{x}}_{\text{LMMSE}} = \mathbf{W} \mathbf{y} + \mathbf{b}$$
 
@@ -298,7 +298,7 @@ $$\mathbf{C}{\text{MMSE}, ii} = \mathbb{E}\left[ (x_i - \hat{x}{\text{MMSE}, i})
 
 &#x20;$$\operatorname{tr}(\mathbf{C}{\text{MMSE}}) = \sum_i{ }\mathbf{C}_{\text{MMSE}, ii}$$
 
-#### &#x20;  &#x20;
+#### &#x20; &#x20;
 
 #### &#x20;
 
@@ -732,5 +732,78 @@ $$
 \bar{e} = \frac{1}{N} \text{tr} \left[ P \left( \bar{e}P + (1 - \bar{e})I \right)^{-1} \right] ] [ e = \frac{1}{N} \text{tr} \left[ B \left( \bar{e}I + D \right)^{-1} \right]
 $$
 
-####
+### 推导的（20)
 
+给定条件概率分布 $  p(\mathbf{x}|\mathbf{y}')$.      的表达式如下：
+
+$$
+p(\mathbf{x}|\mathbf{y}') \propto \exp\left(-\frac{1}{2} \left[ (\mathbf{y}' - A' \mathbf{x})^T C_{vv}^{-1} (\mathbf{y}' - A' \mathbf{x}) + (\mathbf{x} - \mathbf{a})^T D_x^{-1} (\mathbf{x} - \mathbf{a}) \right]\right)
+$$
+
+#### 第一步：展开第一个二次型
+
+首先，我们展开第一个二次型：
+
+$$
+(\mathbf{y}' - A' \mathbf{x})^T C_{vv}^{-1} (\mathbf{y}' - A' \mathbf{x})
+$$
+
+展开为：
+
+$$
+(\mathbf{y}' - A' \mathbf{x})^T C_{vv}^{-1} (\mathbf{y}' - A' \mathbf{x}) = \mathbf{y}'^T C_{vv}^{-1} \mathbf{y}' - 2\mathbf{y}'^T C_{vv}^{-1} A' \mathbf{x} + \mathbf{x}^T A'^T C_{vv}^{-1} A' \mathbf{x}
+$$
+
+#### 第二步：展开第二个二次型
+
+接下来，我们展开第二个二次型：
+
+$$
+(\mathbf{x} - \mathbf{a})^T D_x^{-1} (\mathbf{x} - \mathbf{a})
+$$
+
+展开为：
+
+$$
+(\mathbf{x} - \mathbf{a})^T D_x^{-1} (\mathbf{x} - \mathbf{a}) = \mathbf{x}^T D_x^{-1} \mathbf{x} - 2 \mathbf{x}^T D_x^{-1} \mathbf{a} + \mathbf{a}^T D_x^{-1} \mathbf{a}
+$$
+
+#### 第三步：合并展开的项
+
+现在，我们将展开的两项合并：
+
+$$
+\mathbf{y}'^T C_{vv}^{-1} \mathbf{y}' - 2\mathbf{y}'^T C_{vv}^{-1} A' \mathbf{x} + \mathbf{x}^T A'^T C_{vv}^{-1} A' \mathbf{x} + \mathbf{x}^T D_x^{-1} \mathbf{x} - 2 \mathbf{x}^T D_x^{-1} \mathbf{a} + \mathbf{a}^T D_x^{-1} \mathbf{a}
+$$
+
+#### 最终表达式
+
+完整的 ( p(\mathbf{x}|\mathbf{y}') ) 表达式可以写成：
+
+$$
+p(\mathbf{x}|\mathbf{y}') \propto \exp\left(-\frac{1}{2} \left[\mathbf{x}^T (A'^T C_{vv}^{-1} A' + D_x^{-1}) \mathbf{x} - 2\mathbf{x}^T (A'^T C_{vv}^{-1} \mathbf{y}' + D_x^{-1} \mathbf{a}) + \mathbf{y}'^T C_{vv}^{-1} \mathbf{y}' + \mathbf{a}^T D_x^{-1} \mathbf{a} \right]\right)
+$$
+
+&#x20;
+
+#### &#x20;
+
+$$
+\text{MSE} = \frac{1}{N} \text{tr}[C_{MMSE}]
+$$
+
+* **$C\_{MMSE}$** 是最小均方误差 (MMSE) 估计的协方差矩阵。这个矩阵描述了每个分量 $x\_i$ 的估计值与真实值之间误差的方差，以及这些误差之间的协方差。
+* **tr\[$C\_{MMSE}$]** 是 $C\_{MMSE}$ 的迹（trace），即 $C\_{MMSE}$ 的所有对角元素之和。这些对角元素代表了每个分量 $x\_i$ 的估计误差的方差。因此，$\text{tr}\[C\_{MMSE}]$ 是所有分量的误差方差之和。
+* **N** 是向量 $x$ 的维度（即 $x$ 中元素的个数）。
+* **MSE** 是均方误差，它是所有分量的均方误差的平均值。通过对 $C\_{MMSE}$ 的迹进行平均，我们得到了整个向量的均方误差。
+
+#### 公式的直观理解
+
+* **最小均方误差 (MMSE)** 是通过最小化估计值和真实值之间的均方误差来获得的。在这个框架下，$C\_{MMSE}$ 描述了这个最优估计的统计性质。
+* 通过计算  $ C\_{MMSE}$ 的迹，我们得到了整个系统中的总误差方差。而将这个值除以 $N$（向量的维度）后，得到的就是每个分量的平均均方误差，也就是我们常说的 MSE。
+
+
+
+#### 总结
+
+该公式正确地描述了均方误差与最小均方误差协方差矩阵之间的关系，表明均方误差可以通过 MMSE 协方差矩阵的迹来计算。这在信号处理、统计推断等领域是一个非常常用的公式。
