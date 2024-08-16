@@ -6,3 +6,4 @@
 * [矩阵运算（随机，不随机）](ju-zhen-yun-suan-sui-ji-bu-sui-ji.md)
 * [Improved Variance Predictions in Approximate Message Passing](improved-variance-predictions-in-approximate-message-passing.md)
 * [Generalized Approximate Message Passing for Estimation with Random Linear Mixing](<page-1 (1).md>)
+* [AMP公式](amp-gong-shi.md)
