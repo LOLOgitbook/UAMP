@@ -212,5 +212,153 @@ $$
 
 这种技术在分析大随机矩阵时非常常用，特别是在信号处理和通信中的近似消息传递（AMP）及相关算法中。
 
+假设我们有一个对角矩阵 $$\mathbf{D}_N$$，其中 $$N = 3$$，$$\mathbf{D}_N$$ 的对角元素分别为 $$[d_1, d_2, d_3]$$。这个矩阵可以表示为：
 
+$$
+\mathbf{D}_N = \begin{pmatrix} d_1 & 0 & 0 \\ 0 & d_2 & 0 \\ 0 & 0 & d_3 \end{pmatrix}
+$$
 
+假设 $$\overline{\mathbf{V}}$$ 是一个 $$3 \times 3$$ 的正交矩阵，这意味着它的列向量是单位正交的，并且 $$\overline{\mathbf{V}}^T \overline{\mathbf{V}} = \mathbf{I}$$。
+
+例如：
+
+$$
+\overline{\mathbf{V}} = \begin{pmatrix} v_{11} & v_{12} & v_{13} \\ v_{21} & v_{22} & v_{23} \\ v_{31} & v_{32} & v_{33} \end{pmatrix}
+$$
+
+我们现在考虑矩阵乘积 $$\overline{\mathbf{V}}^T \mathbf{D}_N \overline{\mathbf{V}}$$：
+
+$$
+\overline{\mathbf{V}}^T \mathbf{D}_N \overline{\mathbf{V}} = \begin{pmatrix} v_{11} & v_{21} & v_{31} \\ v_{12} & v_{22} & v_{32} \\ v_{13} & v_{23} & v_{33} \end{pmatrix} \begin{pmatrix} d_1 & 0 & 0 \\ 0 & d_2 & 0 \\ 0 & 0 & d_3 \end{pmatrix} \begin{pmatrix} v_{11} & v_{12} & v_{13} \\ v_{21} & v_{22} & v_{23} \\ v_{31} & v_{32} & v_{33} \end{pmatrix}
+$$
+
+这个结果是一个 $$3 \times 3$$ 的矩阵，其中每个元素是一个涉及 $$v_{ij}$$ 和 $$d_i$$ 的组合。
+
+在大系统假设下，即当 $$N$$ 很大时，$$\overline{\mathbf{V}}^T \mathbf{D}_N \overline{\mathbf{V}}$$ 的行为可以近似为：
+
+$$
+\overline{\mathbf{V}}^T \mathbf{D}_N \overline{\mathbf{V}} \approx \frac{1}{N} \operatorname{tr}(\mathbf{D}_N) \mathbf{I}
+$$
+
+其中 $$\operatorname{tr}(\mathbf{D}_N)$$ 是 $$\mathbf{D}_N$$ 的迹，即 $$d_1 + d_2 + d_3$$。
+
+对于这个例子，$$\frac{1}{N} \operatorname{tr}(\mathbf{D}_N)$$ 可以计算为：
+
+$$
+\frac{1}{3} (d_1 + d_2 + d_3)
+$$
+
+因此，我们可以近似地说：
+
+$$
+\overline{\mathbf{V}}^T \mathbf{D}_N \overline{\mathbf{V}} \approx \frac{1}{3} (d_1 + d_2 + d_3) \mathbf{I}
+$$
+
+这里的 $$\mathbf{I}$$ 是 $$3 \times 3$$ 的单位矩阵：
+
+$$
+\mathbf{I} = \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{pmatrix}
+$$
+
+最终的近似结果是：
+
+$$
+\overline{\mathbf{V}}^T \mathbf{D}_N \overline{\mathbf{V}} \approx \frac{1}{3} (d_1 + d_2 + d_3) \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{pmatrix} = \begin{pmatrix} \frac{1}{3}(d_1 + d_2 + d_3) & 0 & 0 \\ 0 & \frac{1}{3}(d_1 + d_2 + d_3) & 0 \\ 0 & 0 & \frac{1}{3}(d_1 + d_2 + d_3) \end{pmatrix}
+$$
+
+这个近似表明，原本复杂的矩阵乘积在大系统假设下可以简化为一个与迹相关的标量乘以单位矩阵。这种简化大大降低了计算复杂度，并且在 $$N$$ 足够大时是合理的。
+
+<figure><img src=".gitbook/assets/Screenshot 2024-08-16 at 2.54.52 pm.png" alt=""><figcaption></figcaption></figure>
+
+假设 (\mathbf{D}\_N) 是一个 (3 \times 3) 的对角矩阵：
+
+$$
+\mathbf{D}_N = \begin{pmatrix} d_1 & 0 & 0 \\ 0 & d_2 & 0 \\ 0 & 0 & d_3 \end{pmatrix}
+$$
+
+(\overline{\mathbf{V\}}) 是一个 (3 \times 3) 的正交矩阵：
+
+$$
+\overline{\mathbf{V}} = \begin{pmatrix} v_{11} & v_{12} & v_{13} \\ v_{21} & v_{22} & v_{23} \\ v_{31} & v_{32} & v_{33} \end{pmatrix}
+$$
+
+首先，我们计算 (\mathbf{D}\_N \overline{\mathbf{V\}}) 的乘积：
+
+$$
+\mathbf{D}_N \overline{\mathbf{V}} = \begin{pmatrix} d_1 & 0 & 0 \\ 0 & d_2 & 0 \\ 0 & 0 & d_3 \end{pmatrix} \begin{pmatrix} v_{11} & v_{12} & v_{13} \\ v_{21} & v_{22} & v_{23} \\ v_{31} & v_{32} & v_{33} \end{pmatrix} = \begin{pmatrix} d_1v_{11} & d_1v_{12} & d_1v_{13} \\ d_2v_{21} & d_2v_{22} & d_2v_{23} \\ d_3v_{31} & d_3v_{32} & d_3v_{33} \end{pmatrix}
+$$
+
+接下来计算 (\overline{\mathbf{V\}}^T \mathbf{D}\_N \overline{\mathbf{V\}})：
+
+$$
+\overline{\mathbf{V}}^T \mathbf{D}_N \overline{\mathbf{V}} = \begin{pmatrix} v_{11} & v_{21} & v_{31} \\ v_{12} & v_{22} & v_{32} \\ v_{13} & v_{23} & v_{33} \end{pmatrix} \begin{pmatrix} d_1v_{11} & d_1v_{12} & d_1v_{13} \\ d_2v_{21} & d_2v_{22} & d_2v_{23} \\ d_3v_{31} & d_3v_{32} & d_3v_{33} \end{pmatrix}
+$$
+
+这个乘积可以展开为：
+
+$$
+\overline{\mathbf{V}}^T \mathbf{D}_N \overline{\mathbf{V}} = \begin{pmatrix} d_1v_{11}^2 + d_2v_{21}^2 + d_3v_{31}^2 & d_1v_{11}v_{12} + d_2v_{21}v_{22} + d_3v_{31}v_{32} & d_1v_{11}v_{13} + d_2v_{21}v_{23} + d_3v_{31}v_{33} \\ d_1v_{12}v_{11} + d_2v_{22}v_{21} + d_3v_{32}v_{31} & d_1v_{12}^2 + d_2v_{22}^2 + d_3v_{32}^2 & d_1v_{12}v_{13} + d_2v_{22}v_{23} + d_3v_{32}v_{33} \\ d_1v_{13}v_{11} + d_2v_{23}v_{21} + d_3v_{33}v_{31} & d_1v_{13}v_{12} + d_2v_{23}v_{22} + d_3v_{33}v_{32} & d_1v_{13}^2 + d_2v_{23}^2 + d_3v_{33}^2 \end{pmatrix}
+$$
+
+#### 近似解释
+
+在大系统假设下，当 (N) 非常大时，(\overline{\mathbf{V\}}) 中的元素 (v\_{ij}) 可以被认为是随机的并且独立同分布。根据大数定律，这些随机变量的平方和交叉项的平均值趋于某个固定值：
+
+1. 对角线上元素 (d\_1v\_{11}^2 + d\_2v\_{21}^2 + d\_3v\_{31}^2) 等可以近似为 $$\frac{1}{N} \sum_{i=1}^{N} d_i$$，因为每个 (v\_{ij}^2) 的期望值大致为 $$\frac{1}{N}$$（这是由于正交矩阵的性质，即列向量是单位向量）。
+2. 非对角元素 $$d_1v_{11}v_{12} + d_2v_{21}v_{22} + d_3v_{31}v_{32}$$ 的期望值由于独立性趋近于零，因为这些交叉项涉及不同的正交向量之间的乘积，其期望为零。
+
+因此，整个矩阵可以近似为：
+
+$$
+\overline{\mathbf{V}}^T \mathbf{D}_N \overline{\mathbf{V}} \approx \frac{1}{N} \operatorname{tr}(\mathbf{D}_N) \mathbf{I}
+$$
+
+在我们的例子中，(\operatorname{tr}(\mathbf{D}\_N) = d\_1 + d\_2 + d\_3)，所以最终结果为：
+
+$$
+\overline{\mathbf{V}}^T \mathbf{D}_N \overline{\mathbf{V}} \approx \frac{1}{3} (d_1 + d_2 + d_3) \mathbf{I}
+$$
+
+这意味着在大系统情况下，复杂的矩阵乘积近似为对角矩阵，且对角线上所有元素均为 $$\frac{1}{3}$$ 的 (\mathbf{D}\_N) 的迹。这个近似大大简化了计算过程，并且在 (N) 足够大时是非常有效的。
+
+#### 1. 正交矩阵的性质
+
+正交矩阵 $$\overline{\mathbf{V}}$$ 的列向量是单位向量，并且这些列向量彼此正交。这意味着对于任意两个不同的列向量 $$\mathbf{v}_i$$ 和 $$\mathbf{v}_j$$（即 $$\overline{\mathbf{V}}$$ 的第 $$i$$ 列和第 $$j$$ 列）满足：
+
+$$
+\mathbf{v}_i \cdot \mathbf{v}_j = \sum_{k=1}^{N} v_{ki}v_{kj} = 0 \quad \text{(当 \(i \neq j\) 时)}
+$$
+
+其中 $$v_{ki}$$ 表示矩阵 $$\overline{\mathbf{V}}$$ 的第 $$k$$ 行第 $$i$$ 列的元素。
+
+#### 2. 期望值的计算
+
+假设 $$\overline{\mathbf{V}}$$ 的元素 $$v_{ki}$$ 是从某个分布中随机抽取的独立同分布随机变量。为了简化讨论，我们假设这些随机变量的期望值为 0，方差为 $$1/N$$（这是常见的 Haar 分布矩阵元素的性质）。
+
+现在我们来看非对角元素，例如：
+
+$$
+d_1 v_{11}v_{12} + d_2 v_{21}v_{22} + d_3 v_{31}v_{32}
+$$
+
+在这个表达式中，每个乘积 $$v_{ki}v_{kj}$$（例如 $$v_{11}v_{12}$$）是来自正交矩阵不同列之间的乘积。
+
+由于这些 $$v_{ki}$$ 是独立同分布的随机变量，且每个 $$v_{ki}$$ 的期望值为 0，所以它们的乘积的期望值也为 0：
+
+$$
+\mathbb{E}[v_{ki}v_{kj}] = \mathbb{E}[v_{ki}] \cdot \mathbb{E}[v_{kj}] = 0 \cdot 0 = 0 \quad \text{(当 \(i \neq j\) 时)}
+$$
+
+因此，整个非对角元素的期望值就是这些项的期望值的和，而每一项的期望值为 0，所以：
+
+$$
+\mathbb{E}[d_1 v_{11}v_{12} + d_2 v_{21}v_{22} + d_3 v_{31}v_{32}] = d_1 \mathbb{E}[v_{11}v_{12}] + d_2 \mathbb{E}[v_{21}v_{22}] + d_3 \mathbb{E}[v_{31}v_{32}] = 0
+$$
+
+#### 3. 大数定律的作用
+
+即使在单次实现中这些非对角元素可能不是精确的零，但在 $$N$$ 非常大的情况下，根据大数定律，随机变量的平均值将趋于其期望值。因此，尽管个别乘积 $$v_{ki}v_{kj}$$ 可能是非零的，但是随着 $$N$$ 的增大，这些随机噪声会逐渐平均化，使得非对角元素的值趋近于零。
+
+#### 总结
+
+正是由于正交矩阵中不同列的向量之间的乘积在期望上为零，这导致了非对角元素的期望值也趋近于零。这也是为什么在大系统假设下，$$\overline{\mathbf{V}}^T \mathbf{D}_N \overline{\mathbf{V}}$$ 可以被近似为一个对角矩阵的原因，对角元素由 $$\mathbf{D}_N$$ 的迹给出。
