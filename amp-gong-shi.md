@@ -268,6 +268,61 @@ $$
 
 这个近似表明，原本复杂的矩阵乘积在大系统假设下可以简化为一个与迹相关的标量乘以单位矩阵。这种简化大大降低了计算复杂度，并且在 $$N$$ 足够大时是合理的。
 
+好的，我们首先计算 $$\overline{\mathbf{V}}^T \mathbf{D}_N \overline{\mathbf{V}}$$ 的具体表达式，然后解释为什么在大系统假设下可以近似为 $$\frac{1}{N} \operatorname{tr}(\mathbf{D}_N) \mathbf{I}$$。
+
+假设 $$\mathbf{D}_N$$ 是一个 $$3 \times 3$$ 的对角矩阵：
+
+$$
+\mathbf{D}_N = \begin{pmatrix} d_1 & 0 & 0 \\ 0 & d_2 & 0 \\ 0 & 0 & d_3 \end{pmatrix}
+$$
+
+$$\overline{\mathbf{V}}$$ 是一个 $$3 \times 3$$ 的正交矩阵：
+
+$$
+\overline{\mathbf{V}} = \begin{pmatrix} v_{11} & v_{12} & v_{13} \\ v_{21} & v_{22} & v_{23} \\ v_{31} & v_{32} & v_{33} \end{pmatrix}
+$$
+
+首先，我们计算 $$\mathbf{D}_N \overline{\mathbf{V}}$$ 的乘积：
+
+$$
+\mathbf{D}_N \overline{\mathbf{V}} = \begin{pmatrix} d_1 & 0 & 0 \\ 0 & d_2 & 0 \\ 0 & 0 & d_3 \end{pmatrix} \begin{pmatrix} v_{11} & v_{12} & v_{13} \\ v_{21} & v_{22} & v_{23} \\ v_{31} & v_{32} & v_{33} \end{pmatrix} = \begin{pmatrix} d_1v_{11} & d_1v_{12} & d_1v_{13} \\ d_2v_{21} & d_2v_{22} & d_2v_{23} \\ d_3v_{31} & d_3v_{32} & d_3v_{33} \end{pmatrix}
+$$
+
+接下来计算 $$\overline{\mathbf{V}}^T \mathbf{D}_N \overline{\mathbf{V}}$$：
+
+$$
+\overline{\mathbf{V}}^T \mathbf{D}_N \overline{\mathbf{V}} = \begin{pmatrix} v_{11} & v_{21} & v_{31} \\ v_{12} & v_{22} & v_{32} \\ v_{13} & v_{23} & v_{33} \end{pmatrix} \begin{pmatrix} d_1v_{11} & d_1v_{12} & d_1v_{13} \\ d_2v_{21} & d_2v_{22} & d_2v_{23} \\ d_3v_{31} & d_3v_{32} & d_3v_{33} \end{pmatrix}
+$$
+
+这个乘积可以展开为：
+
+$$
+\overline{\mathbf{V}}^T \mathbf{D}_N \overline{\mathbf{V}} = \begin{pmatrix} d_1v_{11}^2 + d_2v_{21}^2 + d_3v_{31}^2 & d_1v_{11}v_{12} + d_2v_{21}v_{22} + d_3v_{31}v_{32} & d_1v_{11}v_{13} + d_2v_{21}v_{23} + d_3v_{31}v_{33} \\ d_1v_{12}v_{11} + d_2v_{22}v_{21} + d_3v_{32}v_{31} & d_1v_{12}^2 + d_2v_{22}^2 + d_3v_{32}^2 & d_1v_{12}v_{13} + d_2v_{22}v_{23} + d_3v_{32}v_{33} \\ d_1v_{13}v_{11} + d_2v_{23}v_{21} + d_3v_{33}v_{31} & d_1v_{13}v_{12} + d_2v_{23}v_{22} + d_3v_{33}v_{32} & d_1v_{13}^2 + d_2v_{23}^2 + d_3v_{33}^2 \end{pmatrix}
+$$
+
+这是一个 $$3 \times 3$$ 的矩阵，其中每个元素是 $$v_{ij}$$ 和 $$d_i$$ 的组合。
+
+#### 近似解释
+
+在大系统假设下，当 $$N$$ 非常大时，$$\overline{\mathbf{V}}$$ 中的元素 $$v_{ij}$$ 可以被认为是随机的并且独立同分布。根据大数定律，这些随机变量的平方和交叉项的平均值趋于某个固定值：
+
+1. 对角线上元素 $$d_1v_{11}^2 + d_2v_{21}^2 + d_3v_{31}^2$$ 等可以近似为 $$\frac{1}{N} \sum_{i=1}^{N} d_i$$，因为每个 $$v_{ij}^2$$ 的期望值大致为 $$\frac{1}{N}$$（这是由于正交矩阵的性质，即列向量是单位向量）。
+2. 非对角元素 $$d_1v_{11}v_{12} + d_2v_{21}v_{22} + d_3v_{31}v_{32}$$ 的期望值由于独立性趋近于零，因为这些交叉项涉及不同的正交向量之间的乘积，其期望为零。
+
+因此，整个矩阵可以近似为：
+
+$$
+\overline{\mathbf{V}}^T \mathbf{D}_N \overline{\mathbf{V}} \approx \frac{1}{N} \operatorname{tr}(\mathbf{D}_N) \mathbf{I}
+$$
+
+在我们的例子中，$$\operatorname{tr}(\mathbf{D}_N) = d_1 + d_2 + d_3$$，所以最终结果为：
+
+$$
+\overline{\mathbf{V}}^T \mathbf{D}_N \overline{\mathbf{V}} \approx \frac{1}{3} (d_1 + d_2 + d_3) \mathbf{I}
+$$
+
+这意味着在大系统情况下，复杂的矩阵乘积近似为对角矩阵，且对角线上所有元素均为 $$\frac{1}{3}$$ 的 $$\mathbf{D}_N$$ 的迹。这个近似大大简化了计算过程，并且在 $$N$$ 足够大时是非常有效的。
+
 <figure><img src=".gitbook/assets/Screenshot 2024-08-16 at 2.54.52 pm.png" alt=""><figcaption></figcaption></figure>
 
 假设 (\mathbf{D}\_N) 是一个 (3 \times 3) 的对角矩阵：
