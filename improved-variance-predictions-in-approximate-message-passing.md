@@ -274,7 +274,7 @@ LMMSE估计的协方差矩阵：$$\mathbf{C}_{\text{LMMSE}} = (\mathbf{A}^T \mat
 
 **最小均方误差（MMSE）估计**
 
-&#x20;_对于高斯分布，MMSE估计的协方差矩阵_可以表示为： $$\mathbf{C}{\text{MMSE}} = \mathbb{E}\left[ (\mathbf{x} - \hat{\mathbf{x}}{\text{MMSE}}) (\mathbf{x} - \hat{\mathbf{x}}_{\text{MMSE}})^T \right]$$
+&#x20;_对于高斯分布，MMSE估计的协方差矩&#x9635;_&#x53EF;以表示为： $$\mathbf{C}{\text{MMSE}} = \mathbb{E}\left[ (\mathbf{x} - \hat{\mathbf{x}}{\text{MMSE}}) (\mathbf{x} - \hat{\mathbf{x}}_{\text{MMSE}})^T \right]$$
 
 迹是矩阵对角线元素的和 $$\operatorname{tr}(\mathbf{C}{\text{MMSE}}) = \sum{i=1}^{N} \mathbf{C}_{\text{MMSE}, ii}$$
 
