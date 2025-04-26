@@ -2,6 +2,7 @@
 
 * [AMP\_DL](README.md)
   * [总结](amp_dl/zong-jie.md)
+  * [LAMP](amp_dl/lamp.md)
 * [Towards Convergent Approximate Message Passing by Alternating Constrained Minimization of Bethe Free](<README (1).md>)
 * [Fixed Points of Generalized Approximate Message Passing with Arbitrary Matrices](page-1.md)
 * [Variance Predictions in VAMP/UAMP with Right Rotationally Invariant Measurement Matrices for niidGLM](variance-predictions-in-vamp-uamp-with-right-rotationally-invariant-measurement-matrices-for-niidglm.md)
