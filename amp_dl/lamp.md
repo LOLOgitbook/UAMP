@@ -1,6 +1,8 @@
 # LAMP
 
-1\.
+y
+
+1.
 
 ```python
 prob = problems.bernoulli_gaussian_trial 
@@ -17,6 +19,18 @@ layers = networks.build_LAMP(prob,T=6,shrink='bg',untied=False)
 ```
 
 &#x20;生成eta和 theta 初始
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
