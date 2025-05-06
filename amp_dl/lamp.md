@@ -1,6 +1,6 @@
 # LAMP
 
-y
+f。  df s d
 
 1.
 
