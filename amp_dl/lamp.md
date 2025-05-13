@@ -81,9 +81,15 @@ eta= shrink_bgest # Bernoulli-Gaussian MMSE estimator
 theta_init = (1,math.log(1/.1-1))
 ```
 
+<figure><img src="../.gitbook/assets/Screenshot 2025-05-13 at 5.29.53 pm.png" alt=""><figcaption></figcaption></figure>
+
+```python
+        (xhat_,dxdr_) = eta( rhat_ ,rvar_ , theta_ )
+```
 
 
 
+3. setup\_training
 
 
 
