@@ -55,13 +55,31 @@ prob = problems.bernoulli_gaussian_trial
 
 通过bernoulli\_gaussian产生的
 
+```python
+    prob.name = 'Bernoulli-Gaussian, random A'
+    prob.xval = ((np.random.uniform( 0,1,(N,L))<pnz) * np.random.normal(0,1,(N,L))).astype(np.float32) #生成 验证集用的真实信号
+    prob.yval = np.matmul(A,prob.xval) + np.random.normal(0,math.sqrt( noise_var ),(M,L))
+    prob.xinit = ((np.random.uniform( 0,1,(N,L))<pnz) * np.random.normal(0,1,(N,L))).astype(np.float32) #生成 初始估计用的信号
+    prob.yinit = np.matmul(A,prob.xinit) + np.random.normal(0,math.sqrt( noise_var ),(M,L)) # 生成 初始估计用的观测数据
+    prob.xgen_ = bernoulli_ * tf.random_normal( (N,L) ) # 生成稀疏矩阵
+    prob.ygen_ = tf.matmul( A_,xgen_) + tf.random_normal( (M,L),stddev=math.sqrt( noise_var ) )
+    prob.noise_var = noise_var 
+```
+
 2\.
 
 ```python
 layers = networks.build_LAMP(prob,T=6,shrink='bg',untied=False)
 ```
 
-&#x20;生成eta和 theta 初始
+&#x20;返回：(name,xhat\_,newvars)
+
+生成eta和 theta 初始
+
+```python
+eta= shrink_bgest # Bernoulli-Gaussian MMSE estimator
+theta_init = (1,math.log(1/.1-1))
+```
 
 
 
