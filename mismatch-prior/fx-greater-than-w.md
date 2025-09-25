@@ -21,9 +21,31 @@ $$
 
 <figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
-1
+### fx是ELM学习的，
 
-&#x20;
+## ELM
+
+(1)隐层
+
+$$
+h(x) = sigmoid(V x + b)，其中 sigmoid(z) = 1 / (1 + exp(-z))
+$$
+
+(2)网络输出层
+
+$$
+y (x) = w^T h(x)；多输出时用矩阵 W：y(x) = H(x) W
+$$
+
+(3)
+
+
+
+
+
+
+
+
 
 
 
