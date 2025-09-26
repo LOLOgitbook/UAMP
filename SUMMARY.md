@@ -1,6 +1,12 @@
 # Table of contents
 
-* [AMP\_DL](README.md)
+## mismatch prior
+
+* [fx->w](README.md)
+
+***
+
+* [AMP\_DL](<README (2).md>)
   * [总结](amp_dl/zong-jie.md)
   * [LAMP](amp_dl/lamp.md)
 * [Towards Convergent Approximate Message Passing by Alternating Constrained Minimization of Bethe Free](<README (1).md>)
@@ -10,7 +16,3 @@
 * [Improved Variance Predictions in Approximate Message Passing](improved-variance-predictions-in-approximate-message-passing.md)
 * [Generalized Approximate Message Passing for Estimation with Random Linear Mixing](<page-1 (1).md>)
 * [AMP公式](amp-gong-shi.md)
-
-## mismatch prior
-
-* [fx->w](mismatch-prior/fx-greater-than-w.md)
