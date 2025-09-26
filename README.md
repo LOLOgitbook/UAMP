@@ -79,17 +79,18 @@ $$
 \begin{align}
 m_{f_{x_\ell} \to w_\ell}(w_\ell) 
 &= \exp \left\{ \left\langle \log f_{x_\ell}(x_\ell,w_\ell) \right\rangle_{b(x_\ell)} \right\} \\
-&=   \exp{∫ b(x_l) log( w^T \eth(V x_l + b) ) dx_l }\\
-&=  \exp\left\{{ E_{b(x_l)} [ log( w^T \eth(V x_l + b) ) ] }\right\} \\
+&=   \exp{∫ b(x_l) \log( w^T \eth(V x_l + b) ) dx_l }\\
+&=  \exp\left\{{ E_{b(x_l)} [\log( w^T \eth(V x_l + b) ) ] }\right\} \\
 &\;\le\;
-\exp \left(\log\!\left(\sum_{i=1}^L w_i\,\mathbb{E}[\sigma(Y_i)]\right)\right)\\
+\exp \left(\log\!\left(\sum_{i=1}^L w_i\,\mathbb{E}[\eth(V x_l + b)]\right)\right)\\
+
 &\propto    
 \end{align}
 $$
 
 
 
-
+<div align="left"><figure><img src=".gitbook/assets/Screenshot 2025-09-26 at 9.28.08 am.png" alt=""><figcaption></figcaption></figure></div>
 
 
 
