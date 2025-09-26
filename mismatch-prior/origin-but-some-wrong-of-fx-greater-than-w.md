@@ -1,4 +1,4 @@
-# fx->w
+# origin(but some wrong) of fx->w
 
 #### 在原始的文章，公式的推导是（为了和后边的区别，采用Low Complexity Sparse Bayesian Learning Using Combined BP and MF with a Stretched Factor Graph中的表达）其中
 
@@ -45,7 +45,7 @@ $$
 
 和原来的区别是， $$w_\ell$$ is vetor and weight&#x20;
 
-<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
 
 
@@ -53,7 +53,7 @@ $$
 
 如果 $$f(x) =w^T \times sigmoid(V x + b) ,  sigmoid(z) =\eth(z)= 1 / (1 + exp(-z)),$$
 
-在 $$b(x)=\mathcal{N}(\mu,\Sigma)$$ 下，x:scalar,&#x20;
+在 $$b(x)=\mathcal{N}(\mu,\Sigma)$$ 下，
 
 $$
 \begin{align}
@@ -82,13 +82,12 @@ m_{f_{x_\ell} \to w_\ell}(w_\ell)
 &=  \exp\left\{{ E_{b(x_l)} [\log( w^T \eth(V x_l + b) ) ] }\right\} \\
 &\;\le\;
 \exp \left(\log\!\left(\sum_{i=1}^L w_i\,\mathbb{E}[\eth(V x_l + b)]\right)\right)\\
-&= \sum_{i=1}^L w_i\,\mathbb{E}[\eth(V x_l + b)] \\
 
 &\propto    
 \end{align}
 $$
 
-<figure><img src=".gitbook/assets/Screenshot 2025-09-26 at 9.42.05 am.png" alt="" width="375"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/Screenshot 2025-09-26 at 9.42.05 am.png" alt="" width="375"><figcaption></figcaption></figure>
 
 &#x20;Sigmoid和Probit都是 S 形、关于0对称、单调递增的函数 \
 &#x20;$$\eth(z)=\frac{1}{1+e^{-z}},\qquad \Phi(z)=\int_{-\infty}^{z}\frac{1}{\sqrt{2\pi}}e^{-t^2/2}dt.$$
@@ -117,7 +116,7 @@ m_{f_{x_\ell} \to w_\ell}(w_\ell)
 \end{align}
 $$
 
-<figure><img src=".gitbook/assets/Screenshot 2025-09-26 at 11.03.04 am.png" alt="" width="375"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/Screenshot 2025-09-26 at 11.03.04 am.png" alt="" width="375"><figcaption></figcaption></figure>
 
 $$
 \alpha_{slope} =0.627
@@ -135,4 +134,4 @@ m_{f_{x_\ell}\to w_\ell}(w_\ell)
 \Phi\!\Big(\frac{\alpha m_i}{\sqrt{1+\alpha^2 s_i^2}}\Big)
 $$
 
-<figure><img src=".gitbook/assets/Screenshot 2025-09-26 at 11.15.41 am.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/Screenshot 2025-09-26 at 11.15.41 am.png" alt=""><figcaption></figcaption></figure>

@@ -3,6 +3,8 @@
 ## mismatch prior
 
 * [fx->w](README.md)
+* [origin(but some wrong) of fx->w](mismatch-prior/origin-but-some-wrong-of-fx-greater-than-w.md)
+* [NN to train f(x)](mismatch-prior/nn-to-train-f-x.md)
 
 ***
 
