@@ -45,7 +45,7 @@ $$
 
 和原来的区别是， $$w_\ell$$ is vetor and weight&#x20;
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
 
 
@@ -88,15 +88,51 @@ m_{f_{x_\ell} \to w_\ell}(w_\ell)
 \end{align}
 $$
 
+<figure><img src=".gitbook/assets/Screenshot 2025-09-26 at 9.42.05 am.png" alt="" width="375"><figcaption></figcaption></figure>
 
+&#x20;Sigmoid和Probit都是 S 形、关于0对称、单调递增的函数 \
+&#x20;$$\eth(z)=\frac{1}{1+e^{-z}},\qquad \Phi(z)=\int_{-\infty}^{z}\frac{1}{\sqrt{2\pi}}e^{-t^2/2}dt.$$
 
-<div align="left"><figure><img src=".gitbook/assets/Screenshot 2025-09-26 at 9.28.08 am.png" alt=""><figcaption></figcaption></figure></div>
+$$Y_i \sim \mathcal{N}(m_i,s_i^2),\qquad m_i = v_i^\top \mu + b_i,\quad s_i^2 = v_i^\top \Sigma v_i.$$   &#x20;
 
+$$
+\mathbb E[\eth(Y)]
+\;\approx\;
+\mathbb E[\eth(\alpha Y)]
+\;=\;
+\Phi\!\left(\frac{\alpha m}{\sqrt{1+\alpha^2 s^2}}\right)
+$$
 
+&#x20;logistic–normal 近似（常用闭式）:
 
+代入各单元，得到 $$\mathbb{E}[\sigma(Y_i)] \approx \eth \left(\frac{m_i}{\sqrt{ 1+\frac{\pi^2}{8} s_i^2 }}\right), \qquad i=1,\dots,L.$$
 
+$$
+\begin{align}
+m_{f_{x_\ell} \to w_\ell}(w_\ell) 
+&\;\le\;
+\exp \left(\log\!\left(\sum_{i=1}^L w_i\,\mathbb{E}[\eth(V x_l + b)]\right)\right)\\
+&\propto \exp \left(\log\!\left(\sum_{i=1}^L w_i\,\eth \left(\frac{m_i}{\sqrt{ 1+\frac{\pi^2}{8} s_i^2 }}\right)   \right)\right)     \\
+&\propto    \sum_{i=1}^L w_i\,\eth \left(\frac{m_i}{\sqrt{ 1+\frac{\pi^2}{8} s_i^2 }}\right)    
+\end{align}
+$$
 
+<figure><img src=".gitbook/assets/Screenshot 2025-09-26 at 11.03.04 am.png" alt="" width="375"><figcaption></figcaption></figure>
 
+$$
+\alpha_{slope} =0.627
+$$
 
+$$
+m_{f_{x_\ell}\to w_\ell}(w_\ell)
+\;\approx\;
+\exp\!\Bigg\{
+\log\!\left(\sum_{i=1}^L w_i \;
+\Phi\!\Big(\frac{\alpha m_i}{\sqrt{1+\alpha^2 s_i^2}}\Big)\right)
+\Bigg\}
+=
+\sum_{i=1}^L w_i \;
+\Phi\!\Big(\frac{\alpha m_i}{\sqrt{1+\alpha^2 s_i^2}}\Big)
+$$
 
-
+<figure><img src=".gitbook/assets/Screenshot 2025-09-26 at 11.15.41 am.png" alt=""><figcaption></figcaption></figure>
