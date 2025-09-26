@@ -51,7 +51,29 @@ $$
 
 ### 情况1:
 
-如果 $$f(x) =w^T \times sigmoid(V x + b) , 其中 sigmoid(z) = 1 / (1 + exp(-z))$$
+如果 $$f(x) =w^T \times sigmoid(V x + b) , 其中 sigmoid(z) =\eth(z)= 1 / (1 + exp(-z))$$
+
+$$
+\begin{align}
+m_{f_{x_\ell} \to w_\ell}(w_\ell) 
+&= \exp \left\{ \left\langle \log f_{x_\ell}(x_\ell,w_\ell) \right\rangle_{b(x_\ell)} \right\} \\
+&=   \exp{∫ b(x_l) log( w^T \eth(V x_l + b) ) dx_l }\\
+&=  \exp\left\{{ E_{b(x_l)} [ log( w^T \eth(V x_l + b) ) ] }\right\} \\
+&\propto    
+\end{align}
+$$
+
+(1)Jensen 上界
+
+
+
+
+
+
+
+
+
+
 
 
 
